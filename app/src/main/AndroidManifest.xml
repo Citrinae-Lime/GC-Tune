@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.poc.gctune"
-    android:versionCode="14"
-    android:versionName="1.3.0">
-    <!--
-        [SDK & LOCALE CONFIGURATION UPDATE]
-        - minSdkVersion updated to 30 (Android 11).
-        - targetSdkVersion updated to 36 (Android 16).
-        - android:localeConfig: references @xml/locales_config for Android 13+ native Per-App Language Preferences support.
-    -->
-    <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="36" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- QUERY_ALL_PACKAGES: without it Android hides third-party launchers apps
          from queryIntentActivities and only system icons get recolored -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
