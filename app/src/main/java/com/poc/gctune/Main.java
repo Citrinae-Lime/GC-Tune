@@ -3426,8 +3426,12 @@ public class Main extends Activity {
     }
 
     // ----------------------------------------------------------------- misc
-    private String adbExamples() {
+    private String getAdbExamples() {
         return getString(R.string.adb_examples);
+    }
+
+    private String adbExamples() {
+        return getAdbExamples();
     }
 
     /** Whitelist + appops + standby for ANY package, applied via uid1000. */
