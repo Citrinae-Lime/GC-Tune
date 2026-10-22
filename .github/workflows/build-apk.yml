@@ -1,0 +1,86 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Package APK
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+        with:
+          show-progress: false
+
+      - name: Set up JDK
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: 'current'
+          cache-disabled: true
+
+      - name: Restore Keystore from Secrets
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "Restoring release keystore from secrets..."
+            echo "$KEYSTORE_BASE64" | base64 -d > release.keystore
+          fi
+
+      - name: Build Release APK with Gradle
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          gradle assembleRelease
+
+      - name: Organize Output APKs
+        run: |
+          mkdir -p dist
+          # 收集 app release APK
+          find app/build/outputs/apk/release -name "*.apk" -exec cp {} dist/GC-Tune-release.apk \; 2>/dev/null || true
+          # 收集 overlay release APK（如果存在）
+          find overlay_m3/build/outputs/apk/release -name "*.apk" -exec cp {} dist/GC-Tune-overlay_m3-release.apk \; 2>/dev/null || true
+
+          echo "=== Built APK List ==="
+          ls -lh dist/
+          echo "=== SHA256 Checksums ==="
+          sha256sum dist/*.apk || true
+
+      - name: Upload APK Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: GC-Tune-release-apks
+          path: dist/*.apk
+          retention-days: 14
+
+      - name: Upload to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v3
+        with:
+          files: dist/*.apk
+          generate_release_notes: true

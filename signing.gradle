@@ -1,8 +1,17 @@
 // =========================================================================================
-// 根目录签名配置参考 / Root Signing Configuration
-// =========================================================================================
-// 实际生效的模块级签名文件位于: app/signing.gradle
-// 此文件供在项目根目录下快速定位和修改。
+// 统一签名配置 / Shared Signing Configuration
 // =========================================================================================
 
-apply from: 'app/signing.gradle'
+android {
+    signingConfigs {
+        release {
+            def ks = rootProject.file(System.getenv("KEYSTORE_FILE") ?: "release.keystore")
+            if (ks.exists()) {
+                storeFile ks
+                storePassword System.getenv("KEYSTORE_PASSWORD") ?: ""
+                keyAlias System.getenv("KEY_ALIAS") ?: ""
+                keyPassword System.getenv("KEY_PASSWORD") ?: ""
+            }
+        }
+    }
+}

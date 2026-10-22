@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
 }
 
+// 统一引用根目录签名配置
+apply from: rootProject.file('signing.gradle')
+
 android {
     namespace 'com.poc.gctune.overlay.m3'
     compileSdk 35
@@ -12,15 +15,6 @@ android {
         targetSdk 34
         versionCode 1
         versionName '1.0'
-    }
-
-    signingConfigs {
-        release {
-            storeFile file('../../poc_gcrce/poc.keystore')
-            storePassword 'android'
-            keyAlias 'gd'
-            keyPassword 'android'
-        }
     }
 
     buildTypes {

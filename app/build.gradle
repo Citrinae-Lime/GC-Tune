@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
-// Apply standalone signing config
-apply from: 'signing.gradle'
+// Apply shared signing config from root
+apply from: rootProject.file('signing.gradle')
 
 android {
     namespace 'com.poc.gctune'

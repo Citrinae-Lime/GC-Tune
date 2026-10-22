@@ -5,6 +5,8 @@ classes/
 *.jar
 *.apk
 *.idsig
+*.keystore
+*.jks
 .gradle/
 build/
 app/build/
