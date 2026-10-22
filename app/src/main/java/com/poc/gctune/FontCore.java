@@ -7,24 +7,24 @@ import java.util.zip.*;
 
 public final class FontCore {
     public static void validateFont(File f) throws Exception {
-        if (f.length() < 12 || f.length() > 64L * 1024 * 1024) throw new IOException("Некорректный размер TTF");
+        if (f.length() < 12 || f.length() > 64L * 1024 * 1024) throw new IOException("Invalid TTF size");
         try (DataInputStream in = new DataInputStream(new FileInputStream(f))) {
-            if (in.readInt() != 0x00010000) throw new IOException("Нужен TrueType .ttf, не OTF/TTC");
+            if (in.readInt() != 0x00010000) throw new IOException("TrueType .ttf required, not OTF/TTC");
             int tables = in.readUnsignedShort();
-            if (tables == 0 || tables > 256 || 12L + 16L * tables > f.length()) throw new IOException("Повреждена таблица TTF");
+            if (tables == 0 || tables > 256 || 12L + 16L * tables > f.length()) throw new IOException("Corrupted TTF table");
             in.skipBytes(6);
             Set<String> tags = new HashSet<>();
             for (int i=0; i<tables; i++) {
                 byte[] tag = new byte[4]; in.readFully(tag); tags.add(new String(tag, "US-ASCII"));
                 in.readInt(); long offset = Integer.toUnsignedLong(in.readInt()), size = Integer.toUnsignedLong(in.readInt());
-                if (offset + size > f.length()) throw new IOException("Повреждён TTF");
+                if (offset + size > f.length()) throw new IOException("Corrupted TTF");
             }
-            if (!tags.containsAll(Arrays.asList("head", "cmap", "maxp", "glyf", "loca"))) throw new IOException("Отсутствуют обязательные таблицы TTF");
+            if (!tags.containsAll(Arrays.asList("head", "cmap", "maxp", "glyf", "loca"))) throw new IOException("Missing required TTF tables");
         }
     }
     public static void copy(InputStream in, OutputStream out, long limit) throws IOException {
         byte[] b = new byte[32768]; long n=0; int r;
-        while ((r=in.read(b)) != -1) { n+=r; if(n>limit) throw new IOException("Файл слишком большой"); out.write(b,0,r); }
+        while ((r=in.read(b)) != -1) { n+=r; if(n>limit) throw new IOException("File too large"); out.write(b,0,r); }
     }
     public static void patch(File donor, File font, File output) throws Exception {
         validateFont(font);
@@ -33,10 +33,10 @@ public final class FontCore {
             List<ZipEntry> fonts = new ArrayList<>(); Set<String> names = new HashSet<>();
             for (ZipEntry e : entries) {
                 String n=e.getName();
-                if (!names.add(n) || n.startsWith("/") || n.contains("\\") || Arrays.asList(n.split("/")).contains("..")) throw new IOException("Некорректный архив");
+                if (!names.add(n) || n.startsWith("/") || n.contains("\\") || Arrays.asList(n.split("/")).contains("..")) throw new IOException("Invalid archive");
                 if (!e.isDirectory() && n.startsWith("fonts/") && n.toLowerCase(Locale.ROOT).endsWith(".ttf")) fonts.add(e);
             }
-            if (fonts.size()!=1) throw new IOException("В пакете должен быть ровно один fonts/*.ttf");
+            if (fonts.size()!=1) throw new IOException("Package must contain exactly one fonts/*.ttf");
             try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(output))) {
                 long total=0;
                 for (ZipEntry e : entries) {
@@ -44,7 +44,7 @@ public final class FontCore {
                     out.putNextEntry(target);
                     try (InputStream in=e==fonts.get(0)?new FileInputStream(font):zip.getInputStream(e)) {
                         ByteArrayOutputStream bytes=new ByteArrayOutputStream(); copy(in,bytes,64L*1024*1024);
-                        total+=bytes.size(); if(total>128L*1024*1024) throw new IOException("Архив слишком большой");
+                        total+=bytes.size(); if(total>128L*1024*1024) throw new IOException("Archive too large");
                         bytes.writeTo(out);
                     }
                     out.closeEntry();
@@ -59,7 +59,7 @@ public final class FontCore {
     }
     public static String quote(String s) { return "'"+s.replace("'", "'\"'\"'")+"'"; }
     public static String command(String donor, String archive, String font, String archiveHash, String fontHash, String token) {
-        if (!donor.matches("[\\p{L}\\p{N} _.-]{1,100}") || donor.equals(".") || donor.equals("..")) throw new IllegalArgumentException("Недопустимое имя шрифта");
+        if (!donor.matches("[\\p{L}\\p{N} _.-]{1,100}") || donor.equals(".") || donor.equals("..")) throw new IllegalArgumentException("Invalid font name");
         if (!token.matches("[a-zA-Z0-9-]+")) throw new IllegalArgumentException("token");
         String root="/data/bbkcore/theme/.dwd/c/o/m/b/b/k/t/h/e/m/e/F/";
         return "( S="+quote(archive)+"; R="+quote(font)+"; T="+quote(root+donor+".itz")+"; V="+quote("/data/vfonts/"+donor+".ttf")+"; "

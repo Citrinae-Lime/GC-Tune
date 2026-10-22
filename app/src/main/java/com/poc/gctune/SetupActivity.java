@@ -12,7 +12,6 @@ import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ import android.widget.Toast;
 
 /**
  * First run onboarding: points the user to
- *   Ультраигровой режим -> Поддерживаемые игры -> Другое -> GC Tune
+ *   Ultra Game Mode -> Supported Games -> Other -> GC Tune
  * and jumps there automatically the very first time.
  */
 public class SetupActivity extends Activity {
@@ -51,7 +50,7 @@ public class SetupActivity extends Activity {
         }
     };
 
-    /** "Поддерживаемые игры" screen of Game Cube (exported, verified on device). */
+    /** "Supported Games" screen of Game Cube (exported, verified on device). */
     static Intent gameSettingsIntent() {
         Intent i = new Intent();
         i.setComponent(new ComponentName(GAME_PKG,
@@ -59,7 +58,7 @@ public class SetupActivity extends Activity {
         return i;
     }
 
-    /** Fallback: the "Ультраигровой режим" main screen. */
+    /** Fallback: the "Ultra Game Mode" main screen. */
     static Intent gameMainIntent() {
         Intent i = new Intent();
         i.setComponent(new ComponentName(GAME_PKG, GAME_PKG + ".GameCubeMainActivity"));
@@ -125,7 +124,7 @@ public class SetupActivity extends Activity {
         markLp.gravity = Gravity.CENTER_HORIZONTAL;
         root.addView(mark, markLp);
 
-        TextView title = Ui.label(this, "GC Tune", 28f, Ui.TEXT);
+        TextView title = Ui.label(this, getString(R.string.app_name), 28f, Ui.TEXT);
         title.setLetterSpacing(-0.01f);
         title.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams titleLp = new LinearLayout.LayoutParams(-2, -2);
@@ -150,8 +149,7 @@ public class SetupActivity extends Activity {
         statusLp.topMargin = Ui.dp(this, 12);
         root.addView(statusRow, statusLp);
 
-        TextView path = Ui.text(this,
-                "Ультраигровой режим → Поддерживаемые игры → Другое → GC Tune", 11.5f, Ui.MUTED);
+        TextView path = Ui.text(this, getString(R.string.setup_guide_path), 11.5f, Ui.MUTED);
         path.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams pathLp = new LinearLayout.LayoutParams(-2, -2);
         pathLp.gravity = Gravity.CENTER_HORIZONTAL;
@@ -161,7 +159,7 @@ public class SetupActivity extends Activity {
 
         root.addView(settingsButton());
 
-        TextView later = Ui.label(this, "Открыть GC Tune", 13.5f, Ui.MUTED);
+        TextView later = Ui.label(this, getString(R.string.setup_open_app), 13.5f, Ui.MUTED);
         later.setGravity(Gravity.CENTER);
         later.setPadding(Ui.dp(this, 20), Ui.dp(this, 12), Ui.dp(this, 20), Ui.dp(this, 12));
         later.setBackground(Ui.pillRipple(this, 0x00000000, 0x306CE5A8));
@@ -185,7 +183,7 @@ public class SetupActivity extends Activity {
         btn.setPadding(Ui.dp(this, 22), Ui.dp(this, 14), Ui.dp(this, 18), Ui.dp(this, 14));
         btn.setElevation(Ui.dp(this, 3));
 
-        TextView t = Ui.label(this, "Поддерживаемые игры", 14.5f, Ui.ACCENT);
+        TextView t = Ui.label(this, getString(R.string.game_cube_supported_games), 14.5f, Ui.ACCENT);
         btn.addView(t);
 
         ImageView chevron = new ImageView(this);
@@ -213,7 +211,7 @@ public class SetupActivity extends Activity {
             try {
                 startActivity(gameMainIntent());
             } catch (Throwable t2) {
-                Toast.makeText(this, "Не удалось открыть настройки игры", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.setup_open_settings_failed), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -235,11 +233,11 @@ public class SetupActivity extends Activity {
         if (statusDot == null) return;
         if (isGame()) {
             statusDot.setImageDrawable(iconDotOn);
-            statusText.setText("GC Tune в списке игр");
+            statusText.setText(getString(R.string.status_in_game_list));
             statusText.setTextColor(Ui.ACCENT);
         } else {
             statusDot.setImageDrawable(iconDotOff);
-            statusText.setText("не в списке игр");
+            statusText.setText(getString(R.string.status_not_in_game_list));
             statusText.setTextColor(Ui.MUTED);
         }
     }

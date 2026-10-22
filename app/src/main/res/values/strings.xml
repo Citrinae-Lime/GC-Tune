@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GC Tune</string>
+
+    <!-- General / Common -->
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="copied">Copied to clipboard</string>
+    <string name="copy_failed">Failed to copy</string>
+    <string name="search">Search</string>
+    <string name="nothing_found">Nothing found</string>
+    <string name="file_not_selected">No file selected</string>
+    <string name="file_preparing">File is still preparing — please wait</string>
+    <string name="reading_file">Reading file…</string>
+    <string name="preparing">Preparing…</string>
+    <string name="file_ready_md5">File ready, MD5 %1$s — ready to install</string>
+    <string name="prep_error">Preparation error: %1$s</string>
+    <string name="explorer_unavailable">File explorer unavailable</string>
+    <string name="wait_current_cmd">Please wait for the current command to finish</string>
+    <string name="not_in_game_list_toast">Add GC Tune: Ultra Game Mode → Supported Games → Other</string>
+    <string name="not_in_game_list_err">GC Tune is not in the Game Cube list — add it and try again</string>
+    <string name="no_resp_uid1000">No response from uid 1000 — open Ultra Game Mode panel and try again</string>
+    <string name="no_resp_uid1000_short">no response from uid 1000\n</string>
+    <string name="cmd_sent_open_game">Command sent — open Ultra Game Mode panel…</string>
+    <string name="status_running">…running\n</string>
+    <string name="status_running_single">running…</string>
+    <string name="status_canceled">Canceled</string>
+    <string name="open_game_mode">Open Ultra Game Mode</string>
+    <string name="status_game_cube_running">The command will run automatically as soon as you open the Game Cube sidebar — FpsManager will launch it automatically.</string>
+    <string name="status_in_game_list">GC Tune in game list</string>
+    <string name="status_not_in_game_list">not in game list</string>
+    <string name="details_in_console">Details in console (Shell tab)</string>
+    <string name="no_write_secure_toast">Command not published to daemon: missing WRITE_SECURE_SETTINGS</string>
+    <string name="no_write_secure_log">Missing WRITE_SECURE_SETTINGS — run: adb shell pm grant com.poc.gctune android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="game_cube_supported_games">Supported Games</string>
+
+    <!-- Navigation -->
+    <string name="nav_shell">Shell</string>
+    <string name="nav_custom">Customization</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_theme">Theme</string>
+    <string name="nav_icons">Icons</string>
+    <string name="nav_settings_theme">System Settings</string>
+    <string name="nav_fonts">Fonts</string>
+    <string name="nav_misc">Misc</string>
+
+    <!-- Shell Page -->
+    <string name="shell_cmd_hint">Command or script</string>
+    <string name="shell_console">Console</string>
+    <string name="shell_console_empty">Console is empty</string>
+    <string name="shell_paste">Paste</string>
+    <string name="shell_pasted">Pasted from clipboard</string>
+    <string name="shell_enter_cmd">Enter a command</string>
+    <string name="shell_empty_cmd">empty command</string>
+    <string name="shell_file_filter">Script file (.sh / .txt)</string>
+    <string name="shell_imported_lines">Imported lines: %d</string>
+    <string name="shell_import_error">Import error: %1$s</string>
+    <string name="shell_decode_error">Decode error: %1$s</string>
+    <string name="shell_no_output">(command executed with no text output)</string>
+
+    <!-- Theme Page -->
+    <string name="theme_title">Theme</string>
+    <string name="theme_subtitle">Install and apply .itz</string>
+    <string name="theme_file_label">Theme file (.itz)</string>
+    <string name="theme_pick_btn">Select .itz</string>
+    <string name="theme_install_btn">Install and open iTheme</string>
+    <string name="theme_hint">Select .itz and tap «Install»</string>
+    <string name="theme_copy_info">File copy saved to Download/gctune. Applied when Ultra Game Mode is open.</string>
+    <string name="theme_pick_first">Please select .itz first</string>
+    <string name="theme_id_replaced">IDs replaced: %d</string>
+    <string name="theme_desc_no_id">description.xml has no IDs — file untouched</string>
+    <string name="theme_id_not_replaced">IDs NOT replaced: %1$s</string>
+    <string name="theme_src_unreadable">uid 1000 cannot read source file</string>
+    <string name="theme_src_stale">Source does not match selected file — please re-select</string>
+    <string name="theme_no_itz">No .itz files found in .../theme/.dwd/.../T</string>
+    <string name="theme_no_itheme_pkg">Could not determine iTheme package — details in console</string>
+    <string name="theme_write_fail">Write failed — check console (Shell tab)</string>
+    <string name="theme_write_fail_file">Failed to write %1$s</string>
+    <string name="theme_replaced_stats">Replaced files: %1$d%2$s</string>
+    <string name="theme_error_suffix">, errors: %d</string>
+    <string name="theme_itheme_opened">, iTheme opened — please apply theme</string>
+    <string name="theme_itheme_not_opened"> — iTheme failed to open, see console</string>
+
+    <!-- Icons Page -->
+    <string name="icons_title">Icons</string>
+    <string name="icons_subtitle">Icon recoloring and styling</string>
+    <string name="icons_preview">Preview</string>
+    <string name="icons_source">Icon Source</string>
+    <string name="icons_source_system">System icons</string>
+    <string name="icons_source_pack_btn">Pack</string>
+    <string name="icons_source_system_status">Source: system icons</string>
+    <string name="icons_color_title">Tint Color</string>
+    <string name="icons_monet">Monet (wallpaper colors)</string>
+    <string name="icons_monet_sub">Automatically extract theme colors from wallpaper</string>
+    <string name="icons_monet_applied">Color extracted from wallpaper (Monet)</string>
+    <string name="icons_fine_tune">Fine Tuning</string>
+    <string name="icons_desat">Desaturation</string>
+    <string name="icons_lighten">Lighten</string>
+    <string name="icons_strength">Tint Strength</string>
+    <string name="icons_scale">Icon Size</string>
+    <string name="icons_reset_btn">Reset settings</string>
+    <string name="icons_reset_toast">Settings reset</string>
+    <string name="icons_style_layer">Style: background + icon</string>
+    <string name="icons_separate_layers">Separate into layers (like IconPack Studio)</string>
+    <string name="icons_bg_color">Background color:</string>
+    <string name="icons_shape">Icon shape</string>
+    <string name="icons_shape_sub">35 official Material 3 shapes · Tap to select</string>
+    <string name="icons_shape_dialog_title">Select shape (Material 3 Expressive)</string>
+    <string name="icons_apply_btn">Recolor and apply</string>
+    <string name="icons_hint">Select color and tap «Recolor»</string>
+    <string name="icons_pack_info">ADW/Nova packs imported. Applied when Ultra Game Mode is open.</string>
+    <string name="icons_searching_packs">Searching for icon packs…</string>
+    <string name="icons_no_packs_found">No icon packs found — install any icon pack from Play Store</string>
+    <string name="icons_system_without_pack">System icons (no pack)</string>
+    <string name="icons_dialog_title">Icon pack</string>
+    <string name="icons_loading_pack">Loading «%1$s»…</string>
+    <string name="icons_pack_loaded">Pack loaded: %d mapped icons</string>
+    <string name="icons_pack_unsupported">Pack not supported (no appfilter.xml)</string>
+    <string name="icons_no_apps_list">Failed to get application list</string>
+    <string name="icons_recoloring">Recoloring icons…</string>
+    <string name="icons_rendering_progress">Rendered %1$d of %2$d%3$s — applying via channel…</string>
+    <string name="icons_rendering_err_suffix"> (errors: %d)</string>
+    <string name="icons_no_icons_err">No recolored icons found — please retry</string>
+    <string name="icons_busy_err">Previous installation still running — wait and retry</string>
+    <string name="icons_applied">Icons applied%1$s — check your launcher%2$s</string>
+    <string name="icons_applied_count_suffix"> (%d icons)</string>
+    <string name="icons_style_fail_suffix"> (style not switched: missing WRITE_SECURE_SETTINGS)</string>
+
+    <!-- Customization Hub -->
+    <string name="custom_hub_title">Customization</string>
+    <string name="custom_hub_subtitle">Theme, icons, and colors</string>
+    <string name="custom_block_theme_sub">Install .itz</string>
+    <string name="custom_block_settings_sub">Recolor accent and Monet</string>
+    <string name="custom_block_icons_sub">Recoloring and icon packs</string>
+    <string name="custom_block_fonts_sub">System fonts</string>
+    <string name="custom_block_misc_sub">Background protection &amp; ADB bridge</string>
+
+    <!-- Settings Theme Page -->
+    <string name="st_title">System Settings</string>
+    <string name="st_subtitle">Recolor accents and switches</string>
+    <string name="st_preview">Settings accent preview</string>
+    <string name="st_preview_sub">Accent of switches, buttons, and sliders in Settings</string>
+    <string name="st_color_mode">Color Mode</string>
+    <string name="st_monet">Monet (wallpaper colors)</string>
+    <string name="st_monet_sub">Automatically extract accent from current wallpaper</string>
+    <string name="st_monet_applied">Accent extracted from wallpaper (Monet)</string>
+    <string name="st_apply_btn">Recolor Settings</string>
+    <string name="st_hint">Select color mode and tap «Recolor Settings»</string>
+    <string name="st_desc">Generates system accent via Fabricated Overlay and OriginOS theme. Requires Ultra Game Mode.</string>
+    <string name="st_applying">Applying accent to system Settings…</string>
+    <string name="st_success">Accent applied to Settings! Settings restarted.</string>
+    <string name="st_recolored_toast">Settings recolored!</string>
+    <string name="st_check_settings">Command executed — check system Settings</string>
+
+    <!-- Fonts Page -->
+    <string name="font_title">Fonts</string>
+    <string name="font_subtitle">Replace TTF in /data/vfonts</string>
+    <string name="font_file_label">Font file (.ttf)</string>
+    <string name="font_pick_btn">Select .ttf</string>
+    <string name="font_install_btn">Install and open iTheme</string>
+    <string name="font_hint">Select .ttf and tap «Install»</string>
+    <string name="font_copy_info">Copy saved to Download/gctune. Backups (.bak) created before replacement.</string>
+    <string name="font_pick_first">Please select .ttf first</string>
+    <string name="font_no_fonts_found">No TTF files found in /data/vfonts/. Download a font in iTheme first and try again.</string>
+    <string name="font_missing_ttf">TTF file disappeared during installation. Please search again. Details in Shell tab.</string>
+    <string name="font_success">, iTheme opened — apply font and reboot device</string>
+
+    <!-- Misc Page -->
+    <string name="misc_title">Misc</string>
+    <string name="misc_subtitle">Background survival and ADB bridge</string>
+    <string name="misc_protection_title">App Background Protection</string>
+    <string name="misc_protection_desc">Add to Doze battery whitelist (cmd deviceidle whitelist) + unrestricted background execution.</string>
+    <string name="misc_target">Target: %1$s</string>
+    <string name="misc_target_hint">Tap «Select from list» to change</string>
+    <string name="misc_app_list_btn">Select from list</string>
+    <string name="misc_freeze_btn">Freeze</string>
+    <string name="misc_keepalive_title">Keep-Alive Service</string>
+    <string name="misc_keepalive_desc">Sticky foreground service + watchdog alarm for GC Tune</string>
+    <string name="misc_adb_title">ADB Bridge</string>
+    <string name="misc_adb_sub">Commands via ADB</string>
+    <string name="misc_adb_sub_desc">Only adb shell and root (uid 2000 / 0)</string>
+    <string name="misc_copy_cmds_btn">Copy commands</string>
+    <string name="misc_copy_cmds_toast">Commands copied</string>
+    <string name="misc_adb_warn">Enable only during use.</string>
+    <string name="misc_app_picker_title">Application</string>
+    <string name="misc_adding_doze">Adding to Doze whitelist…</string>
+    <string name="misc_removing_doze">Removing from Doze whitelist…</string>
+    <string name="misc_freezing">Freezing %1$s…</string>
+    <string name="misc_unfreezing">Unfreezing…</string>
+    <string name="misc_no_resp_game_mode">No response — open Ultra Game Mode</string>
+    <string name="misc_frozen">Frozen%1$s</string>
+    <string name="misc_disabled_suffix"> (disabled)</string>
+    <string name="misc_bg_restricted">Background restricted, suspend unavailable</string>
+    <string name="misc_unfrozen">Unfrozen</string>
+    <string name="misc_partial_console">Partially — check console</string>
+    <string name="misc_protection_removed">Protection removed (removed from whitelist)</string>
+    <string name="misc_not_in_whitelist">Not in whitelist — check console</string>
+    <string name="misc_protected_status">Protected: Doze whitelist + background allowed</string>
+    <string name="misc_service_active">service active</string>
+    <string name="misc_service_off">off</string>
+    <string name="misc_bridge_on">enabled</string>
+    <string name="misc_bridge_off">disabled</string>
+    <string name="misc_not_sent">not sent — game status missing or channel busy</string>
+
+    <!-- Settings Page -->
+    <string name="prefs_channel_params">Channel and application parameters</string>
+    <string name="prefs_require_game">Require game status</string>
+    <string name="prefs_daemon">Auto-execution (daemon)</string>
+    <string name="prefs_timeout">Timeout, sec</string>
+    <string name="prefs_first_run">First-run setup</string>
+    <string name="prefs_about">GC Tune 1.0 · Game Cube channel</string>
+    <string name="prefs_language">Language</string>
+    <string name="prefs_language_sub">Choose application language</string>
+    <string name="prefs_system_language_btn">System language settings</string>
+    <string name="lang_default">System default</string>
+    <string name="lang_en">English</string>
+    <string name="lang_ru">Русский</string>
+    <string name="lang_zh">简体中文</string>
+
+    <!-- Setup / Onboarding -->
+    <string name="setup_guide_path">Ultra Game Mode → Supported Games → Other → GC Tune</string>
+    <string name="setup_open_app">Open GC Tune</string>
+    <string name="setup_open_settings_failed">Could not open game settings</string>
+
+    <!-- Services / Notifications -->
+    <string name="keepalive_notif_text">Background protection active</string>
+    <string name="channel_notif_running">Command executing, waiting for channel response…</string>
+
+    <!-- ADB Examples Monospace Block -->
+    <string name="adb_examples" formatted="false"># command via uid 1000 channel
+adb shell content call --uri content://com.poc.gctune.bridge --method exec --arg "id" --extra wait:i:8
+
+# result: ack|STATUS|rc|base64
+adb shell settings get secure gc_tune_adb_out
+
+# or script from repository
+./adbplus.ps1 "id"</string>
+
+    <!-- Material 3 Shape Names Array -->
+    <string-array name="shape_names">
+        <item>Circle</item>
+        <item>Square</item>
+        <item>Slanted Square</item>
+        <item>Arch</item>
+        <item>Fan</item>
+        <item>Arrow</item>
+        <item>Semi-Circle</item>
+        <item>Oval</item>
+        <item>Pill</item>
+        <item>Triangle</item>
+        <item>Diamond</item>
+        <item>Clam Shell</item>
+        <item>Pentagon</item>
+        <item>Gem</item>
+        <item>Sunny</item>
+        <item>Very Sunny</item>
+        <item>Cookie 4</item>
+        <item>Cookie 6</item>
+        <item>Cookie 7</item>
+        <item>Cookie 9</item>
+        <item>Cookie 12</item>
+        <item>Ghostish</item>
+        <item>Clover 4</item>
+        <item>Clover 8</item>
+        <item>Burst</item>
+        <item>Soft Burst</item>
+        <item>Boom</item>
+        <item>Soft Boom</item>
+        <item>Flower</item>
+        <item>Puffy</item>
+        <item>Puffy Diamond</item>
+        <item>Pixel Circle</item>
+        <item>Pixel Triangle</item>
+        <item>Bun</item>
+        <item>Heart</item>
+    </string-array>
+    <string name="bridge_disabled">ADB bridge disabled — enable «Commands via ADB» on the «Misc» page</string>
+</resources>

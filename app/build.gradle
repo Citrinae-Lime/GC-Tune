@@ -2,30 +2,24 @@ plugins {
     id 'com.android.application'
 }
 
+// Apply standalone signing config
+apply from: 'signing.gradle'
+
 android {
     namespace 'com.poc.gctune'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId 'com.poc.gctune'
-        minSdk 26
-        targetSdk 30
-        versionCode 13
-        versionName '1.2.2'
+        minSdk 30
+        targetSdk 36
+        versionCode 14
+        versionName '1.3.0'
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    signingConfigs {
-        release {
-            storeFile file('../../poc_gcrce/poc.keystore')
-            storePassword 'android'
-            keyAlias 'gd'
-            keyPassword 'android'
-        }
+        sourceCompatibility JavaVersion.toVersion(25)
+        targetCompatibility JavaVersion.toVersion(25)
     }
 
     buildTypes {

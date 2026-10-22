@@ -3,7 +3,12 @@
     package="com.poc.gctune"
     android:versionCode="10"
     android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="30" />
+    <!--
+        [SDK & LOCALE CONFIGURATION UPDATE]
+        - minSdkVersion updated to 30 (Android 11 / R).
+        - targetSdkVersion updated to 36 (Android 16).
+    -->
+    <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="36" />
     <!-- QUERY_ALL_PACKAGES: without it Android hides third-party launchers apps
          from queryIntentActivities and only system icons get recolored -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
@@ -18,7 +23,7 @@
     <!-- lets the honest "command pending" notification be visible on 13+ -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- rest is zero permissions: everything privileged goes through the uid1000 channel -->
-    <application android:label="GC Tune">
+    <application android:label="@string/app_name" android:localeConfig="@xml/locales_config">
         <!-- first run: onboarding + jump into Game Cube settings -->
         <activity android:name=".SetupActivity" android:exported="true">
             <intent-filter>

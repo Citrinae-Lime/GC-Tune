@@ -9,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +16,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 /** Minimal settings screen. */
+/*
+ * =========================================================================================
+ * EXTENSION:
+ * Integrated language selection preference (LocaleHelper) allowing users to switch
+ * languages directly in-app or jump to system Per-App Language settings (Android 13+ / 14+).
+ * =========================================================================================
+ */
 public class PrefsActivity extends Activity {
 
     private SharedPreferences prefs;
@@ -53,7 +59,8 @@ public class PrefsActivity extends Activity {
         root.addView(switchRow());
         root.addView(daemonSwitchRow());
         root.addView(timeoutRow());
-        root.addView(navRow("Поддерживаемые игры", new View.OnClickListener() {
+        root.addView(languageRow());
+        root.addView(navRow(getString(R.string.game_cube_supported_games), new View.OnClickListener() {
             @Override public void onClick(View v) {
                 try {
                     startActivity(SetupActivity.gameSettingsIntent());
@@ -62,7 +69,7 @@ public class PrefsActivity extends Activity {
                 }
             }
         }));
-        root.addView(navRow("Первичная настройка", new View.OnClickListener() {
+        root.addView(navRow(getString(R.string.prefs_first_run), new View.OnClickListener() {
             @Override public void onClick(View v) {
                 prefs.edit().putBoolean("setup_done", false).apply();
                 startActivity(new Intent(PrefsActivity.this, SetupActivity.class));
@@ -70,7 +77,7 @@ public class PrefsActivity extends Activity {
             }
         }));
 
-        TextView about = Ui.text(this, "GC Tune 1.0 · канал Game Cube", 11f, Ui.MUTED);
+        TextView about = Ui.text(this, getString(R.string.prefs_about), 11f, Ui.MUTED);
         about.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams aboutLp = new LinearLayout.LayoutParams(-2, -2);
         aboutLp.gravity = Gravity.CENTER_HORIZONTAL;
@@ -92,7 +99,7 @@ public class PrefsActivity extends Activity {
         });
         row.addView(back, new LinearLayout.LayoutParams(Ui.dp(this, 40), Ui.dp(this, 40)));
 
-        TextView title = Ui.label(this, "Настройки", 20f, Ui.TEXT);
+        TextView title = Ui.label(this, getString(R.string.nav_settings), 20f, Ui.TEXT);
         LinearLayout.LayoutParams titleLp = new LinearLayout.LayoutParams(-2, -2);
         titleLp.leftMargin = Ui.dp(this, 10);
         row.addView(title, titleLp);
@@ -106,7 +113,7 @@ public class PrefsActivity extends Activity {
     private View switchRow() {
         LinearLayout row = rowBase();
 
-        TextView t = Ui.text(this, "Требовать статус игры", 14f, Ui.TEXT);
+        TextView t = Ui.text(this, getString(R.string.prefs_require_game), 14f, Ui.TEXT);
         row.addView(t, new LinearLayout.LayoutParams(0, -2, 1f));
 
         Switch sw = new Switch(this);
@@ -130,7 +137,7 @@ public class PrefsActivity extends Activity {
     private View daemonSwitchRow() {
         LinearLayout row = rowBase();
 
-        TextView t = Ui.text(this, "Авто-исполнение (демон)", 14f, Ui.TEXT);
+        TextView t = Ui.text(this, getString(R.string.prefs_daemon), 14f, Ui.TEXT);
         row.addView(t, new LinearLayout.LayoutParams(0, -2, 1f));
 
         Switch sw = new Switch(this);
@@ -144,8 +151,6 @@ public class PrefsActivity extends Activity {
         sw.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(android.widget.CompoundButton btn, boolean checked) {
-                // OFF stops sending WAKE lines: the watcher (if any) stays
-                // blocked on logcat at zero cost and simply never fires again
                 prefs.edit().putBoolean("daemon_on", checked).apply();
             }
         });
@@ -156,7 +161,7 @@ public class PrefsActivity extends Activity {
     private View timeoutRow() {
         LinearLayout row = rowBase();
 
-        TextView t = Ui.text(this, "Таймаут, сек", 14f, Ui.TEXT);
+        TextView t = Ui.text(this, getString(R.string.prefs_timeout), 14f, Ui.TEXT);
         row.addView(t, new LinearLayout.LayoutParams(0, -2, 1f));
 
         timeoutInput = new EditText(this);
@@ -173,6 +178,36 @@ public class PrefsActivity extends Activity {
             @Override public void afterTextChanged(Editable s) { storeTimeout(); }
         });
         row.addView(timeoutInput, new LinearLayout.LayoutParams(Ui.dp(this, 64), -2));
+        return row;
+    }
+
+    private View languageRow() {
+        LinearLayout row = rowBase();
+
+        LinearLayout col = Ui.col(this);
+        col.addView(Ui.text(this, getString(R.string.prefs_language), 14f, Ui.TEXT));
+        TextView sub = Ui.text(this, LocaleHelper.getLanguageDisplayName(this), 11.5f, Ui.MUTED);
+        LinearLayout.LayoutParams subLp = new LinearLayout.LayoutParams(-2, -2);
+        subLp.topMargin = Ui.dp(this, 2);
+        col.addView(sub, subLp);
+        row.addView(col, new LinearLayout.LayoutParams(0, -2, 1f));
+
+        ImageView chevron = new ImageView(this);
+        chevron.setImageDrawable(M3Icons.chevron(Ui.MUTED, Ui.dp(this, 18)));
+        chevron.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        row.addView(chevron, new LinearLayout.LayoutParams(-2, -2));
+
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Ui.tap(v);
+                LocaleHelper.showLanguageDialog(PrefsActivity.this, new Runnable() {
+                    @Override public void run() {
+                        recreate();
+                    }
+                });
+            }
+        });
+        row.setClickable(true);
         return row;
     }
 

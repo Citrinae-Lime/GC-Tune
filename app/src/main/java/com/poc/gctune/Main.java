@@ -156,7 +156,7 @@ public class Main extends Activity {
     /** Appended by the payload after the user command; travels inside the blob. */
     private static final String RC_MARK = "__RC__";
     private static final Pattern RC_PAT = Pattern.compile(RC_MARK + "(-?\\d+)\\s*$");
-    private static final String NO_OUTPUT = "(команда выполнена без текстового вывода)";
+    private static final String NO_OUTPUT = ""; // localized dynamically via R.string.shell_no_output
     private static final int MAX_ENTRIES = 60;
 
     private Handler h;
@@ -497,7 +497,7 @@ public class Main extends Activity {
     }
 
     private View pasteButton() {
-        TextView paste = Ui.label(this, "Вставить", 13.5f, Ui.ACCENT);
+        TextView paste = Ui.label(this, getString(R.string.shell_paste), 13.5f, Ui.ACCENT);
         paste.setGravity(Gravity.CENTER);
         paste.setPadding(Ui.dp(this, 18), Ui.dp(this, 12), Ui.dp(this, 18), Ui.dp(this, 12));
         paste.setBackground(Ui.pillRipple(this, Ui.PRIMARY, 0x40FFFFFF));
@@ -533,11 +533,11 @@ public class Main extends Activity {
         row.setPadding(Ui.dp(this, 8), Ui.dp(this, 6), Ui.dp(this, 8), Ui.dp(this, 6));
 
         navItems[PAGE_SHELL] = navItem(PAGE_SHELL,
-                M3Icons.terminal(Ui.MUTED, Ui.dp(this, 22)), "Shell");
+                M3Icons.terminal(Ui.MUTED, Ui.dp(this, 22)), getString(R.string.nav_shell));
         navItems[PAGE_CUSTOM] = navItem(PAGE_CUSTOM,
-                M3Icons.grid(Ui.MUTED, Ui.dp(this, 22)), "Кастомизация");
+                M3Icons.grid(Ui.MUTED, Ui.dp(this, 22)), getString(R.string.nav_custom));
         navItems[PAGE_SETTINGS] = navItem(PAGE_SETTINGS,
-                M3Icons.tune(Ui.MUTED, Ui.dp(this, 22)), "Настройки");
+                M3Icons.tune(Ui.MUTED, Ui.dp(this, 22)), getString(R.string.nav_settings));
         for (View v : navItems) {
             if (v == null) continue;
             row.addView(v, new LinearLayout.LayoutParams(0, -2, 1f));
@@ -782,7 +782,7 @@ public class Main extends Activity {
         cmdInput.setBackground(null);
         cmdInput.setTextColor(Ui.TEXT);
         cmdInput.setHintTextColor(Ui.MUTED);
-        cmdInput.setHint("Команда или скрипт");
+        cmdInput.setHint(getString(R.string.shell_cmd_hint));
         cmdInput.setTypeface(Typeface.MONOSPACE);
         cmdInput.setTextSize(14f);
         cmdInput.setGravity(Gravity.TOP | Gravity.START);
@@ -832,7 +832,7 @@ public class Main extends Activity {
         // ---- header: caption + copy-to-clipboard
         LinearLayout head = Ui.row(this);
         head.setPadding(Ui.dp(this, 18), Ui.dp(this, 12), Ui.dp(this, 12), Ui.dp(this, 10));
-        head.addView(Ui.section(this, "Консоль"),
+        head.addView(Ui.section(this, getString(R.string.shell_console)),
                 new LinearLayout.LayoutParams(0, -2, 1f));
 
         ImageView copyBtn = new ImageView(this);
@@ -902,7 +902,7 @@ public class Main extends Activity {
     /** Plain-text dump of the console for the copy button. */
     private void copyLog() {
         if (entries.isEmpty()) {
-            toast("Консоль пуста");
+            toast(getString(R.string.shell_console_empty));
             return;
         }
         StringBuilder sb = new StringBuilder();
@@ -911,8 +911,8 @@ public class Main extends Activity {
                 sb.append(e.out).append('\n');
             } else {
                 sb.append("uid1000$ ").append(e.cmd).append('\n');
-                if (e.pending) sb.append("…выполняется\n");
-                else if (e.failed) sb.append("нет ответа от uid 1000\n");
+                if (e.pending) sb.append(getString(R.string.status_running));
+                else if (e.failed) sb.append(getString(R.string.no_resp_uid1000_short));
                 else {
                     sb.append(e.out).append('\n');
                     if (e.rc != RC_UNKNOWN) sb.append("rc ").append(e.rc).append('\n');
@@ -924,9 +924,9 @@ public class Main extends Activity {
             android.content.ClipboardManager clipboard =
                     (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             clipboard.setPrimaryClip(android.content.ClipData.newPlainText("GC Tune", sb.toString()));
-            toast("Вывод скопирован");
+            toast(getString(R.string.copied));
         } catch (Throwable t) {
-            toast("Не удалось скопировать");
+            toast(getString(R.string.copy_failed));
         }
     }
 
@@ -940,8 +940,8 @@ public class Main extends Activity {
         root.setPadding(Ui.dp(this, 18), Ui.dp(this, 22), Ui.dp(this, 18), Ui.dp(this, 30));
         scroll.addView(root, new FrameLayout.LayoutParams(-1, -2));
 
-        TextView title = Ui.label(this, "Тема", 26f, Ui.TEXT);
-        root.addView(pageTitle(title, "Установка и применение .itz"));
+        TextView title = Ui.label(this, getString(R.string.theme_title), 26f, Ui.TEXT);
+        root.addView(pageTitle(title, getString(R.string.theme_subtitle)));
 
         themeHint = hintCard();
         themeHint.setVisibility(View.GONE);
@@ -953,14 +953,14 @@ public class Main extends Activity {
         LinearLayout fileCard = Ui.col(this);
         fileCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         fileCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        fileCard.addView(Ui.section(this, "Файл темы (.itz)"));
+        fileCard.addView(Ui.section(this, getString(R.string.theme_file_label)));
 
-        themeFileText = Ui.text(this, "файл не выбран", 14f, Ui.TEXT);
+        themeFileText = Ui.text(this, getString(R.string.file_not_selected), 14f, Ui.TEXT);
         LinearLayout.LayoutParams fileLp = new LinearLayout.LayoutParams(-2, -2);
         fileLp.topMargin = Ui.dp(this, 8);
         fileCard.addView(themeFileText, fileLp);
 
-        View choose = pillButton(M3Icons.folder(Ui.ACCENT, Ui.dp(this, 18)), "Выбрать .itz",
+        View choose = pillButton(M3Icons.folder(Ui.ACCENT, Ui.dp(this, 18)), getString(R.string.theme_pick_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { pickThemeFile(); }
                 });
@@ -974,7 +974,7 @@ public class Main extends Activity {
 
         // ---- install button
         View install = pillButton(M3Icons.play(Ui.ACCENT, Ui.dp(this, 18)),
-                "Установить и открыть iTheme",
+                getString(R.string.theme_install_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { runThemeInstall(); }
                 });
@@ -987,14 +987,14 @@ public class Main extends Activity {
         LinearLayout statusCard = Ui.col(this);
         statusCard.setBackground(Ui.shape(this, Ui.INPUT_BG, 12f, Ui.BORDER, 1.2f));
         statusCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 14), Ui.dp(this, 12));
-        themeStatusText = Ui.text(this, "Выберите .itz и нажмите «Установить»", 13f, Ui.MUTED);
+        themeStatusText = Ui.text(this, getString(R.string.theme_hint), 13f, Ui.MUTED);
         statusCard.addView(themeStatusText);
         LinearLayout.LayoutParams statusLp = new LinearLayout.LayoutParams(-1, -2);
         statusLp.bottomMargin = Ui.dp(this, 14);
         root.addView(statusCard, statusLp);
 
         TextView note = Ui.text(this,
-                "Копия файла — в Download/gctune. Применение — при открытом режиме игры.",
+                getString(R.string.theme_copy_info),
                 11.5f, Ui.MUTED);
         LinearLayout.LayoutParams noteLp = new LinearLayout.LayoutParams(-1, -2);
         noteLp.bottomMargin = Ui.dp(this, 24);
@@ -1078,10 +1078,9 @@ public class Main extends Activity {
         card.addView(arrow, new LinearLayout.LayoutParams(Ui.dp(this, 32), Ui.dp(this, 32)));
 
         LinearLayout col = Ui.col(this);
-        col.addView(Ui.label(this, "Откройте режим игры", 15.5f, Ui.ACCENT));
+        col.addView(Ui.label(this, getString(R.string.open_game_mode), 15.5f, Ui.ACCENT));
         TextView sub = Ui.text(this,
-                "Команда выполнится сама, как только откроете шторку Game Cube — "
-                        + "FpsManager запустит её автоматически.", 12f, Ui.TEXT);
+                getString(R.string.status_game_cube_running), 12f, Ui.TEXT);
         LinearLayout.LayoutParams subLp = new LinearLayout.LayoutParams(-1, -2);
         subLp.topMargin = Ui.dp(this, 4);
         col.addView(sub, subLp);
@@ -1100,9 +1099,9 @@ public class Main extends Activity {
                 "application/octet-stream", "application/zip", "application/x-zip-compressed", "*/*"});
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         try {
-            startActivityForResult(Intent.createChooser(intent, "Файл темы (.itz)"), REQ_PICK_ITZ);
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.theme_file_label)), REQ_PICK_ITZ);
         } catch (Throwable t) {
-            toast("Проводник недоступен");
+            toast(getString(R.string.explorer_unavailable));
         }
     }
 
@@ -1114,14 +1113,14 @@ public class Main extends Activity {
      */
     private void stageThemeFile(final Uri src) {
         if (staging) {
-            toast("Файл ещё готовится");
+            toast(getString(R.string.file_preparing));
             return;
         }
         staging = true;
         stagedPath = null;
         stagedMd5 = null;
-        themeFileText.setText("подготовка…");
-        themeStatus("Читаю файл…", Ui.MUTED);
+        themeFileText.setText(getString(R.string.preparing));
+        themeStatus(getString(R.string.reading_file), Ui.MUTED);
         new Thread(new Runnable() {
             @Override public void run() {
                 try {
@@ -1163,7 +1162,7 @@ public class Main extends Activity {
                             }
                         }
                         if (staged == null) {
-                            throw firstErr != null ? firstErr : new Exception("копирование не удалось");
+                            throw firstErr != null ? firstErr : new Exception(getString(R.string.copy_failed));
                         }
                         // reading it back proves the reported path really holds the copy
                         md5 = md5File(new File(staged));
@@ -1184,20 +1183,20 @@ public class Main extends Activity {
                             if (n > 0) {
                                 // rename replaces the destination atomically (same dir)
                                 if (!tmp.renameTo(dst)) {
-                                    throw new Exception("не удалось записать " + dst.getName());
+                                    throw new Exception(getString(R.string.theme_write_fail_file, dst.getName()));
                                 }
                                 path = dst.getAbsolutePath();
                                 md5 = md5File(dst);
-                                idNote = "id подменены: " + n + " → "
+                                idNote = getString(R.string.theme_id_replaced, n) + " → "
                                         + ThemePatcher.FREE_ID + "/" + ThemePatcher.FREE_UID;
                             } else {
                                 tmp.delete();
-                                idNote = "description.xml без id — файл не тронут";
+                                idNote = getString(R.string.theme_desc_no_id);
                             }
                         } catch (Throwable t) {
                             Log.e("GCTune", "id patch failed: " + t);
                             tmp.delete();
-                            idNote = "id НЕ подменены: " + t.getMessage();
+                            idNote = getString(R.string.theme_id_not_replaced, t.getMessage());
                         }
                     }
 
@@ -1212,7 +1211,7 @@ public class Main extends Activity {
                             stagedPath = fp;
                             stagedMd5 = fm;
                             themeFileText.setText(picked + " · " + sizeTxt + "\n" + fp);
-                            themeStatus("Файл готов, md5 " + fm + " — можно устанавливать"
+                            themeStatus(getString(R.string.file_ready_md5, fm)
                                     + (idNoteF != null ? "\n" + idNoteF : ""), Ui.TEXT);
                         }
                     });
@@ -1222,8 +1221,8 @@ public class Main extends Activity {
                             staging = false;
                             stagedPath = null;
                             stagedMd5 = null;
-                            themeFileText.setText("файл не выбран");
-                            themeStatus("Ошибка подготовки: " + t.getMessage(), Ui.ERROR);
+                            themeFileText.setText(getString(R.string.file_not_selected));
+                            themeStatus(getString(R.string.prep_error, t.getMessage()), Ui.ERROR);
                         }
                     });
                 }
@@ -1313,11 +1312,11 @@ public class Main extends Activity {
 
         stagedBytes = 0;
         InputStream in = r.openInputStream(src);
-        if (in == null) throw new Exception("источник недоступен");
+        if (in == null) throw new Exception("source unavailable");
         OutputStream os = r.openOutputStream(out);
         if (os == null) {
             in.close();
-            throw new Exception("хранилище недоступно");
+            throw new Exception("storage unavailable");
         }
         try {
             byte[] buf = new byte[64 * 1024];
@@ -1348,11 +1347,11 @@ public class Main extends Activity {
     /** Fallback: app-specific external dir (needs no permission on any API level). */
     private String copyToAppFiles(Uri src, String name) throws Exception {
         File dir = getExternalFilesDir(null);
-        if (dir == null) throw new Exception("нет внешнего хранилища");
+        if (dir == null) throw new Exception("no external storage");
         File f = new File(dir, name);
 
         InputStream in = getContentResolver().openInputStream(src);
-        if (in == null) throw new Exception("источник недоступен");
+        if (in == null) throw new Exception("source unavailable");
         OutputStream os = new FileOutputStream(f);
         stagedBytes = 0;
         try {
@@ -1370,35 +1369,31 @@ public class Main extends Activity {
         return f.getAbsolutePath();
     }
 
-    private static String humanSize(long bytes) {
-        if (bytes >= 1048576L) {
-            return String.format(java.util.Locale.US, "%.1f МБ", bytes / 1048576.0);
-        }
-        if (bytes >= 1024L) return (bytes / 1024L) + " КБ";
-        return bytes + " Б";
+    private String humanSize(long bytes) {
+        return android.text.format.Formatter.formatFileSize(this, bytes);
     }
 
     // ---------------------------------------------------------- theme: install
     private void runThemeInstall() {
         if (busy) {
-            toast("Дождитесь текущей команды");
+            toast(getString(R.string.wait_current_cmd));
             return;
         }
         if (staging) {
-            toast("Файл ещё готовится — подождите");
+            toast(getString(R.string.file_preparing));
             return;
         }
         if (stagedPath == null || stagedPath.isEmpty()) {
-            toast("Сначала выберите .itz");
+            toast(getString(R.string.theme_pick_first));
             return;
         }
         themeRun = true;
-        themeStatus("Команда отправлена — откройте режим игры…", Ui.ACCENT);
+        themeStatus(getString(R.string.cmd_sent_open_game), Ui.ACCENT);
         showHint();
         if (!apply(themeCommand())) {
             themeRun = false;
             hideHint();
-            themeStatus("GC Tune не в списке игр — добавьте приложение и повторите", Ui.ERROR);
+            themeStatus(getString(R.string.not_in_game_list_err), Ui.ERROR);
         }
     }
 
@@ -1474,27 +1469,27 @@ public class Main extends Activity {
         hideHint();
         String out = (ok && e != null && e.out != null) ? e.out : "";
         if (!ok) {
-            themeStatus("Нет ответа от uid 1000 — откройте режим игры и повторите", Ui.ERROR);
+            themeStatus(getString(R.string.no_resp_uid1000), Ui.ERROR);
         } else if (out.contains("SRC_UNREADABLE")) {
-            themeStatus("uid 1000 не может прочитать файл-источник", Ui.ERROR);
+            themeStatus(getString(R.string.theme_src_unreadable), Ui.ERROR);
         } else if (out.contains("SRC_STALE")) {
-            themeStatus("Источник не совпадает с выбранным файлом — повторите выбор", Ui.ERROR);
+            themeStatus(getString(R.string.theme_src_stale), Ui.ERROR);
         } else if (out.contains("NO_THEME_FOUND")) {
-            themeStatus("В папке .../theme/.dwd/.../T нет ни одного .itz", Ui.ERROR);
+            themeStatus(getString(R.string.theme_no_itz), Ui.ERROR);
         } else if (out.contains("NO_PKG")) {
-            themeStatus("Пакет iTheme определить не удалось — подробности в консоли", Ui.ERROR);
+            themeStatus(getString(R.string.theme_no_itheme_pkg), Ui.ERROR);
         } else if (!out.contains("OK:")) {
-            themeStatus("Запись не удалась — вывод в консоли (вкладка Shell)", Ui.ERROR);
+            themeStatus(getString(R.string.theme_write_fail), Ui.ERROR);
         } else {
             int n = countOccurrences(out, "OK:");
             int fails = countOccurrences(out, "FAIL:");
-            String base = "Заменено файлов: " + n + (fails > 0 ? ", ошибок: " + fails : "");
+            String base = getString(R.string.theme_replaced_stats, n, (fails > 0 ? getString(R.string.theme_error_suffix, fails) : ""));
             if (out.contains("APP_FAILED")) {
-                themeStatus(base + " — iTheme не открылся, вывод в консоли", Ui.ERROR);
+                themeStatus(base + getString(R.string.theme_itheme_not_opened), Ui.ERROR);
             } else if (out.contains("APP_OPENED")) {
-                themeStatus(base + ", iTheme открыт — применяйте тему", Ui.ACCENT);
+                themeStatus(base + getString(R.string.theme_itheme_opened), Ui.ACCENT);
             } else {
-                themeStatus(base + " — подробности в консоли", Ui.TEXT);
+                themeStatus(base + " — " + getString(R.string.details_in_console), Ui.TEXT);
             }
         }
     }
@@ -1536,14 +1531,14 @@ public class Main extends Activity {
         root.setPadding(Ui.dp(this, 18), Ui.dp(this, 22), Ui.dp(this, 18), Ui.dp(this, 30));
         scroll.addView(root, new FrameLayout.LayoutParams(-1, -2));
 
-        TextView iconsTitle = Ui.label(this, "Иконки", 26f, Ui.TEXT);
-        root.addView(pageTitle(iconsTitle, "Перекраска и стилизация иконок"));
+        TextView iconsTitle = Ui.label(this, getString(R.string.icons_title), 26f, Ui.TEXT);
+        root.addView(pageTitle(iconsTitle, getString(R.string.icons_subtitle)));
 
         // ---- preview card
         LinearLayout previewCard = Ui.col(this);
         previewCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         previewCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        previewCard.addView(Ui.section(this, "Предпросмотр"));
+        previewCard.addView(Ui.section(this, getString(R.string.icons_preview)));
         iconsPreviewRow = new LinearLayout(this);
         iconsPreviewRow.setOrientation(LinearLayout.HORIZONTAL);
         LinearLayout.LayoutParams prevLp = new LinearLayout.LayoutParams(-1, -2);
@@ -1557,17 +1552,17 @@ public class Main extends Activity {
         LinearLayout srcCard = Ui.col(this);
         srcCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         srcCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        srcCard.addView(Ui.section(this, "Источник иконок"));
+        srcCard.addView(Ui.section(this, getString(R.string.icons_source)));
 
         LinearLayout srcRow = new LinearLayout(this);
         srcRow.setOrientation(LinearLayout.HORIZONTAL);
         srcRow.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout.LayoutParams srcRowLp = new LinearLayout.LayoutParams(-1, -2);
         srcRowLp.topMargin = Ui.dp(this, 10);
-        iconsSourceValue = Ui.text(this, iconsPackPkg.isEmpty() ? "Системные иконки" : iconsPackLabel,
+        iconsSourceValue = Ui.text(this, iconsPackPkg.isEmpty() ? getString(R.string.icons_source_system) : iconsPackLabel,
                 14f, Ui.TEXT);
         srcRow.addView(iconsSourceValue, new LinearLayout.LayoutParams(0, -2, 1f));
-        View pickBtn = pillButton(M3Icons.folder(Ui.ACCENT, Ui.dp(this, 18)), "Пак",
+        View pickBtn = pillButton(M3Icons.folder(Ui.ACCENT, Ui.dp(this, 18)), getString(R.string.icons_source_pack_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { chooseIconPack(); }
                 });
@@ -1585,7 +1580,7 @@ public class Main extends Activity {
         LinearLayout colorCard = Ui.col(this);
         colorCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         colorCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        colorCard.addView(Ui.section(this, "Цвет перекраски"));
+        colorCard.addView(Ui.section(this, getString(R.string.icons_color_title)));
 
         // Switch: Monet (Auto-extract colors from wallpaper) vs Manual
         LinearLayout monetRow = new LinearLayout(this);
@@ -1594,8 +1589,8 @@ public class Main extends Activity {
         LinearLayout.LayoutParams monetRowLp = new LinearLayout.LayoutParams(-1, -2);
         monetRowLp.topMargin = Ui.dp(this, 8);
         LinearLayout monetTextCol = Ui.col(this);
-        monetTextCol.addView(Ui.text(this, "Monet (цвета из обоев)", 14f, Ui.TEXT));
-        monetTextCol.addView(Ui.text(this, "Автоматически брать цвета темы из обоев", 11.5f, Ui.MUTED));
+        monetTextCol.addView(Ui.text(this, getString(R.string.icons_monet), 14f, Ui.TEXT));
+        monetTextCol.addView(Ui.text(this, getString(R.string.icons_monet_sub), 11.5f, Ui.MUTED));
         monetRow.addView(monetTextCol, new LinearLayout.LayoutParams(0, -2, 1f));
 
         final MaterialSwitch monetSw = new MaterialSwitch(this);
@@ -1666,7 +1661,7 @@ public class Main extends Activity {
                 if (checked) {
                     int monet = getMonetPrimaryColor();
                     setIconsColor(monet);
-                    toast("Цвет взят из обоев (Monet)");
+                    toast(getString(R.string.icons_monet_applied));
                 }
                 saveIconsPrefs();
                 refreshIconsPreview();
@@ -1681,17 +1676,17 @@ public class Main extends Activity {
         LinearLayout tuneCard = Ui.col(this);
         tuneCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         tuneCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        tuneCard.addView(Ui.section(this, "Тонкая настройка"));
-        sbDesat = addSlider(tuneCard, "Обесцвечивание", iconsDesat, new IntSetter() {
+        tuneCard.addView(Ui.section(this, getString(R.string.icons_fine_tune)));
+        sbDesat = addSlider(tuneCard, getString(R.string.icons_desat), iconsDesat, new IntSetter() {
             @Override public void set(int v) { iconsDesat = v; }
         });
-        sbLighten = addSlider(tuneCard, "Осветление", iconsLighten, new IntSetter() {
+        sbLighten = addSlider(tuneCard, getString(R.string.icons_lighten), iconsLighten, new IntSetter() {
             @Override public void set(int v) { iconsLighten = v; }
         });
-        sbStrength = addSlider(tuneCard, "Сила перекраски", iconsStrength, new IntSetter() {
+        sbStrength = addSlider(tuneCard, getString(R.string.icons_strength), iconsStrength, new IntSetter() {
             @Override public void set(int v) { iconsStrength = v; }
         });
-        View resetBtn = pillButton(M3Icons.tune(Ui.TEXT, Ui.dp(this, 18)), "Сброс настроек",
+        View resetBtn = pillButton(M3Icons.tune(Ui.TEXT, Ui.dp(this, 18)), getString(R.string.icons_reset_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { resetIconsTuning(); }
                 });
@@ -1706,14 +1701,14 @@ public class Main extends Activity {
         LinearLayout styleCard = Ui.col(this);
         styleCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         styleCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        styleCard.addView(Ui.section(this, "Стиль: фон + иконка"));
+        styleCard.addView(Ui.section(this, getString(R.string.icons_style_layer)));
 
         LinearLayout switchRow = new LinearLayout(this);
         switchRow.setOrientation(LinearLayout.HORIZONTAL);
         switchRow.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout.LayoutParams switchLp = new LinearLayout.LayoutParams(-1, -2);
         switchLp.topMargin = Ui.dp(this, 8);
-        TextView switchLabel = Ui.text(this, "Разделять на слои (как IconPack Studio)", 14f, Ui.TEXT);
+        TextView switchLabel = Ui.text(this, getString(R.string.icons_separate_layers), 14f, Ui.TEXT);
         switchRow.addView(switchLabel, new LinearLayout.LayoutParams(0, -2, 1f));
         final MaterialSwitch sw = new MaterialSwitch(this);
         sw.setChecked(iconsBgEnabled);
@@ -1734,7 +1729,7 @@ public class Main extends Activity {
         bgRow.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout.LayoutParams bgRowLp = new LinearLayout.LayoutParams(-1, -2);
         bgRowLp.topMargin = Ui.dp(this, 10);
-        bgRow.addView(Ui.text(this, "Цвет фона:", 13f, Ui.MUTED));
+        bgRow.addView(Ui.text(this, getString(R.string.icons_bg_color), 13f, Ui.MUTED));
         String[] bgPresets = {"#FFFFFF", "#F5F5F5", "#212121", "#000000", "#3D7D56", "#1E88E5"};
         for (String hex : bgPresets) {
             final int color = parseColor(hex);
@@ -1770,7 +1765,7 @@ public class Main extends Activity {
         });
         styleCard.addView(bgRow, bgRowLp);
 
-        sbIconScale = addSlider(styleCard, "Размер иконки", 40, 160, iconsScale, new IntSetter() {
+        sbIconScale = addSlider(styleCard, getString(R.string.icons_scale), 40, 160, iconsScale, new IntSetter() {
             @Override public void set(int v) { iconsScale = v; }
         });
 
@@ -1780,20 +1775,10 @@ public class Main extends Activity {
         shapeHead.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout.LayoutParams shLp = new LinearLayout.LayoutParams(-1, -2);
         shLp.topMargin = Ui.dp(this, 14);
-        shapeHead.addView(Ui.section(this, "Форма иконки"), new LinearLayout.LayoutParams(0, -2, 1f));
+        shapeHead.addView(Ui.section(this, getString(R.string.icons_shape)), new LinearLayout.LayoutParams(0, -2, 1f));
         styleCard.addView(shapeHead, shLp);
 
-        final String[] shapeNames = {
-                "Круг (Circle)", "Квадрат (Square)", "Скошенный (Slanted Square)", "Арка (Arch)",
-                "Веер (Fan)", "Стрелка (Arrow)", "Полукруг (Semi-Circle)", "Овал (Oval)",
-                "Капсула (Pill)", "Треугольник (Triangle)", "Ромб (Diamond)", "Ракушка (Clam Shell)",
-                "Пятигранник (Pentagon)", "Кристалл (Gem)", "Солнце (Sunny)", "Яркое солнце (Very Sunny)",
-                "Печенье 4 (Cookie 4)", "Печенье 6 (Cookie 6)", "Печенье 7 (Cookie 7)", "Печенье 9 (Cookie 9)",
-                "Печенье 12 (Cookie 12)", "Привидение (Ghostish)", "Клевер 4 (Clover 4)", "Клевер 8 (Clover 8)",
-                "Вспышка (Burst)", "Мягкая вспышка (Soft Burst)", "Взрыв (Boom)", "Мягкий взрыв (Soft Boom)",
-                "Цветок (Flower)", "Облачко (Puffy)", "Пышный ромб (Puffy Diamond)", "Пиксельный круг (Pixel Circle)",
-                "Пиксельный треугольник (Pixel Triangle)", "Булочка (Bun)", "Сердце (Heart)"
-        };
+        final String[] shapeNames = getResources().getStringArray(R.array.shape_names);
         final int[] shapeIds = {
                 IconsTinter.SHAPE_M3_CIRCLE, IconsTinter.SHAPE_M3_SQUARE, IconsTinter.SHAPE_M3_SLANTED_SQUARE, IconsTinter.SHAPE_M3_ARCH,
                 IconsTinter.SHAPE_M3_FAN, IconsTinter.SHAPE_M3_ARROW, IconsTinter.SHAPE_M3_SEMI_CIRCLE, IconsTinter.SHAPE_M3_OVAL,
@@ -1820,7 +1805,7 @@ public class Main extends Activity {
 
         final LinearLayout shapeInfo = Ui.col(this);
         shapeInfo.setPadding(Ui.dp(this, 12), 0, Ui.dp(this, 8), 0);
-        String initialShapeName = "Закругленный";
+        String initialShapeName = shapeNames[0];
         for (int i = 0; i < shapeIds.length; i++) {
             if (shapeIds[i] == iconsShape) {
                 initialShapeName = shapeNames[i];
@@ -1829,7 +1814,7 @@ public class Main extends Activity {
         }
         final TextView currentShapeTitle = Ui.text(this, initialShapeName, 14f, Ui.TEXT);
         currentShapeTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        final TextView shapeSub = Ui.text(this, "35 официальных Material 3 форм · Нажмите для выбора", 11.5f, Ui.MUTED);
+        final TextView shapeSub = Ui.text(this, getString(R.string.icons_shape_sub), 11.5f, Ui.MUTED);
         shapeInfo.addView(currentShapeTitle);
         shapeInfo.addView(shapeSub);
         shapePickerBtn.addView(shapeInfo, new LinearLayout.LayoutParams(0, -2, 1f));
@@ -1848,9 +1833,9 @@ public class Main extends Activity {
                 dlgScroll.addView(grid, new FrameLayout.LayoutParams(-1, -2));
 
                 final AlertDialog dialog = new AlertDialog.Builder(Main.this)
-                        .setTitle("Выберите форму (Material 3 Expressive)")
+                        .setTitle(getString(R.string.icons_shape_dialog_title))
                         .setView(dlgScroll)
-                        .setNegativeButton("Закрыть", null)
+                        .setNegativeButton(getString(R.string.close), null)
                         .create();
 
                 int itemThumbSize = Ui.dp(Main.this, 38);
@@ -1913,7 +1898,7 @@ public class Main extends Activity {
 
         // ---- apply button
         View apply = pillButton(M3Icons.play(Ui.ACCENT, Ui.dp(this, 18)),
-                "Перекрасить и применить",
+                getString(R.string.icons_apply_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { runIconsApply(); }
                 });
@@ -1925,14 +1910,14 @@ public class Main extends Activity {
         LinearLayout statusCard = Ui.col(this);
         statusCard.setBackground(Ui.shape(this, Ui.INPUT_BG, 12f, Ui.BORDER, 1.2f));
         statusCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 14), Ui.dp(this, 12));
-        iconsStatusText = Ui.text(this, "Выберите цвет и нажмите «Перекрасить»", 13f, Ui.MUTED);
+        iconsStatusText = Ui.text(this, getString(R.string.icons_hint), 13f, Ui.MUTED);
         statusCard.addView(iconsStatusText);
         LinearLayout.LayoutParams statusLp = new LinearLayout.LayoutParams(-1, -2);
         statusLp.bottomMargin = Ui.dp(this, 14);
         root.addView(statusCard, statusLp);
 
         TextView note = Ui.text(this,
-                "Паки ADW/Nova импортируются. Применение — при открытом режиме игры.",
+                getString(R.string.icons_pack_info),
                 11.5f, Ui.MUTED);
         root.addView(note);
 
@@ -2051,7 +2036,7 @@ public class Main extends Activity {
         iconsFgScale = 76;
         iconsRadius = 25;
         iconsShape = IconsTinter.SHAPE_ROUNDED;
-        toast("Настройки сброшены");
+        toast(getString(R.string.icons_reset_toast));
         saveIconsPrefs();
         refreshIconsPreview();
     }
@@ -2071,21 +2056,21 @@ public class Main extends Activity {
 
     /** Discovers installed icon packs (ADW/Nova intents) and shows a chooser. */
     private void chooseIconPack() {
-        toast("Ищу иконокпаки…");
+        toast(getString(R.string.icons_searching_packs));
         new Thread(new Runnable() {
             @Override public void run() {
                 final List<IconPackLoader.Pack> packs = packLoader().findPacks();
                 h.post(new Runnable() {
                     @Override public void run() {
                         if (packs.isEmpty()) {
-                            toast("Иконокпаки не найдены — установите любой пак с Play Market");
+                            toast(getString(R.string.icons_no_packs_found));
                             return;
                         }
                         CharSequence[] items = new CharSequence[packs.size() + 1];
-                        items[0] = "Системные иконки (без пака)";
+                        items[0] = getString(R.string.icons_system_without_pack);
                         for (int i = 0; i < packs.size(); i++) items[i + 1] = packs.get(i).label;
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("Иконокпак")
+                                .setTitle(getString(R.string.icons_dialog_title))
                                 .setItems(items, new DialogInterface.OnClickListener() {
                                     @Override public void onClick(DialogInterface d, int w) {
                                         if (w == 0) {
@@ -2096,7 +2081,7 @@ public class Main extends Activity {
                                         }
                                     }
                                 })
-                                .setNegativeButton("Отмена", null)
+                                .setNegativeButton(getString(R.string.cancel), null)
                                 .show();
                     }
                 });
@@ -2109,23 +2094,23 @@ public class Main extends Activity {
         iconsPackLabel = label;
         saveIconsPrefs();
         if (iconsSourceValue != null) {
-            iconsSourceValue.setText(pkg.isEmpty() ? "Системные иконки" : label);
+            iconsSourceValue.setText(pkg.isEmpty() ? getString(R.string.icons_source_system) : label);
         }
         if (pkg.isEmpty()) {
-            iconsStatus("Источник: системные иконки", Ui.ACCENT);
+            iconsStatus(getString(R.string.icons_source_system_status), Ui.ACCENT);
             refreshIconsPreview();
             return;
         }
-        iconsStatus("Загружаю «" + label + "»…", Ui.ACCENT);
+        iconsStatus(getString(R.string.icons_loading_pack, label), Ui.ACCENT);
         new Thread(new Runnable() {
             @Override public void run() {
                 final int n = packLoader().load(pkg);
                 h.post(new Runnable() {
                     @Override public void run() {
                         if (n > 0) {
-                            iconsStatus("Пак загружен: " + n + " иконок в маппинге", Ui.ACCENT);
+                            iconsStatus(getString(R.string.icons_pack_loaded, n), Ui.ACCENT);
                         } else {
-                            iconsStatus("Пак не поддерживается (нет appfilter.xml)", Ui.ERROR);
+                            iconsStatus(getString(R.string.icons_pack_unsupported), Ui.ERROR);
                         }
                         refreshIconsPreview();
                     }
@@ -2216,21 +2201,21 @@ public class Main extends Activity {
 
     private void runIconsApply() {
         if (busy) {
-            toast("Дождитесь текущей команды");
+            toast(getString(R.string.wait_current_cmd));
             return;
         }
         if (iconsPackages.isEmpty()) {
             loadLauncherApps();
         }
         if (iconsPackages.isEmpty()) {
-            iconsStatus("Не удалось получить список приложений", Ui.ERROR);
+            iconsStatus(getString(R.string.icons_no_apps_list), Ui.ERROR);
             return;
         }
         iconsRun = true;
         busy = true;
         // persist the whole recipe
         saveIconsPrefs();
-        iconsStatus("Перекрашиваю иконки…", Ui.ACCENT);
+        iconsStatus(getString(R.string.icons_recoloring), Ui.ACCENT);
         showHint();
         final int total = iconsPackages.size();
         new Thread(new Runnable() {
@@ -2276,7 +2261,7 @@ public class Main extends Activity {
                         final int d = done;
                         h.post(new Runnable() {
                             @Override public void run() {
-                                iconsStatus("Перекрашено " + d + " / " + total, Ui.ACCENT);
+                                iconsStatus(getString(R.string.icons_recoloring) + " " + d + "/" + total, Ui.ACCENT);
                             }
                         });
                     }
@@ -2342,14 +2327,12 @@ public class Main extends Activity {
                 final int ferr = failed;
                 h.post(new Runnable() {
                     @Override public void run() {
-                        iconsStatus("Отрисовано " + fin + " из " + total
-                                + (ferr > 0 ? " (ошибок: " + ferr + ")" : "")
-                                + " — ставлю через канал…", Ui.ACCENT);
+                        iconsStatus(getString(R.string.icons_rendering_progress, fin, total, (ferr > 0 ? getString(R.string.icons_rendering_err_suffix, ferr) : "")), Ui.ACCENT);
                         busy = false;
                         if (!apply(iconsCommand())) {
                             iconsRun = false;
                             hideHint();
-                            iconsStatus("GC Tune не в списке игр — добавьте приложение и повторите", Ui.ERROR);
+                            iconsStatus(getString(R.string.not_in_game_list_err), Ui.ERROR);
                         }
                     }
                 });
@@ -2524,11 +2507,11 @@ public class Main extends Activity {
         hideHint();
         String out = (ok && e != null && e.out != null) ? e.out : "";
         if (!ok) {
-            iconsStatus("Нет ответа от uid 1000 — откройте режим игры и повторите", Ui.ERROR);
+            iconsStatus(getString(R.string.no_resp_uid1000), Ui.ERROR);
         } else if (out.contains("NO_ICONS")) {
-            iconsStatus("Нет перекрашенных иконок — повторите", Ui.ERROR);
+            iconsStatus(getString(R.string.icons_no_icons_err), Ui.ERROR);
         } else if (out.contains("BUSY")) {
-            iconsStatus("Предыдущая установка ещё идёт — подождите и повторите", Ui.ERROR);
+            iconsStatus(getString(R.string.icons_busy_err), Ui.ERROR);
         } else if (out.contains("APPLIED")) {
             String n = "";
             int i = out.indexOf("APPLIED_ICONS=");
@@ -2539,13 +2522,11 @@ public class Main extends Activity {
                     if (c < '0' || c > '9') break;
                     sb.append(c);
                 }
-                if (sb.length() > 0) n = " (" + sb + " иконок)";
+                if (sb.length() > 0) { try { n = getString(R.string.icons_applied_count_suffix, Integer.parseInt(sb.toString())); } catch (Throwable ignored) { n = " (" + sb + ")"; } }
             }
-            iconsStatus("Иконки применены" + n + " — проверьте лаунчер"
-                    + (styleToggleOk ? "" : " (стиль не переключился: нет WRITE_SECURE_SETTINGS)"),
-                    Ui.ACCENT);
+            iconsStatus(getString(R.string.icons_applied, n, (styleToggleOk ? "" : getString(R.string.icons_style_fail_suffix))), Ui.ACCENT);
         } else {
-            iconsStatus("Подробности в консоли (вкладка Shell)", Ui.TEXT);
+            iconsStatus(getString(R.string.details_in_console), Ui.TEXT);
         }
     }
 
@@ -2559,8 +2540,8 @@ public class Main extends Activity {
         root.setPadding(Ui.dp(this, 18), Ui.dp(this, 22), Ui.dp(this, 18), Ui.dp(this, 30));
         scroll.addView(root, new FrameLayout.LayoutParams(-1, -2));
 
-        TextView title = Ui.label(this, "Настройки", 28f, Ui.TEXT);
-        root.addView(pageTitle(title, "Канал и параметры приложения"));
+        TextView title = Ui.label(this, getString(R.string.nav_settings), 28f, Ui.TEXT);
+        root.addView(pageTitle(title, getString(R.string.prefs_channel_params)));
 
         // Expressive Card Container for settings options
         LinearLayout card = Ui.col(this);
@@ -2571,7 +2552,7 @@ public class Main extends Activity {
         card.addView(settingsDivider());
         card.addView(settingsTimeoutRow());
         card.addView(settingsDivider());
-        card.addView(settingsNavRow("Поддерживаемые игры", new View.OnClickListener() {
+        card.addView(settingsNavRow(getString(R.string.game_cube_supported_games), new View.OnClickListener() {
             @Override public void onClick(View v) {
                 try {
                     startActivity(SetupActivity.gameSettingsIntent());
@@ -2581,7 +2562,9 @@ public class Main extends Activity {
             }
         }));
         card.addView(settingsDivider());
-        card.addView(settingsNavRow("Первичная настройка", new View.OnClickListener() {
+        card.addView(settingsLanguageRow());
+        card.addView(settingsDivider());
+        card.addView(settingsNavRow(getString(R.string.prefs_first_run), new View.OnClickListener() {
             @Override public void onClick(View v) {
                 prefs.edit().putBoolean("setup_done", false).apply();
                 startActivity(new Intent(Main.this, SetupActivity.class));
@@ -2590,7 +2573,7 @@ public class Main extends Activity {
 
         root.addView(card, new LinearLayout.LayoutParams(-1, -2));
 
-        TextView about = Ui.text(this, "GC Tune 1.0 · канал Game Cube", 12f, Ui.MUTED);
+        TextView about = Ui.text(this, getString(R.string.prefs_about), 12f, Ui.MUTED);
         about.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams aboutLp = new LinearLayout.LayoutParams(-2, -2);
         aboutLp.gravity = Gravity.CENTER_HORIZONTAL;
@@ -2601,7 +2584,7 @@ public class Main extends Activity {
 
     private View settingsSwitchRow() {
         LinearLayout row = settingsRowBase();
-        row.addView(Ui.text(this, "Требовать статус игры", 14f, Ui.TEXT),
+        row.addView(Ui.text(this, getString(R.string.prefs_require_game), 14f, Ui.TEXT),
                 new LinearLayout.LayoutParams(0, -2, 1f));
 
         MaterialSwitch sw = new MaterialSwitch(this);
@@ -2622,9 +2605,42 @@ public class Main extends Activity {
         Ui.applyM3Switch(sw);
     }
 
+    /*
+     * =========================================================================================
+     * EXTENSION:
+     * In-app language preference entry allowing direct switching between English, Russian,
+     * and Simplified Chinese, with automatic synchronization to Android 14+ LocaleManager.
+     * =========================================================================================
+     */
+    private View settingsLanguageRow() {
+        LinearLayout row = settingsRowBase();
+        row.setBackground(Ui.ripple(this, 0x00000000, 12f, 0x3382E5A6));
+        row.setPadding(Ui.dp(this, 10), Ui.dp(this, 15), Ui.dp(this, 10), Ui.dp(this, 15));
+        LinearLayout col = Ui.col(this);
+        col.addView(Ui.text(this, getString(R.string.prefs_language), 14f, Ui.TEXT));
+        TextView sub = Ui.text(this, LocaleHelper.getLanguageDisplayName(this), 11.5f, Ui.MUTED);
+        LinearLayout.LayoutParams subLp = new LinearLayout.LayoutParams(-2, -2);
+        subLp.topMargin = Ui.dp(this, 2);
+        col.addView(sub, subLp);
+        row.addView(col, new LinearLayout.LayoutParams(0, -2, 1f));
+        ImageView chevron = new ImageView(this);
+        chevron.setImageDrawable(M3Icons.chevron(Ui.MUTED, Ui.dp(this, 18)));
+        chevron.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        row.addView(chevron, new LinearLayout.LayoutParams(-2, -2));
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Ui.tap(v);
+                LocaleHelper.showLanguageDialog(Main.this, new Runnable() {
+                    @Override public void run() { recreate(); }
+                });
+            }
+        });
+        return row;
+    }
+
     private View settingsTimeoutRow() {
         LinearLayout row = settingsRowBase();
-        row.addView(Ui.text(this, "Таймаут, сек", 14f, Ui.TEXT),
+        row.addView(Ui.text(this, getString(R.string.prefs_timeout), 14f, Ui.TEXT),
                 new LinearLayout.LayoutParams(0, -2, 1f));
 
         settingsTimeout = new EditText(this);
@@ -2708,19 +2724,19 @@ public class Main extends Activity {
         root.setPadding(Ui.dp(this, 18), Ui.dp(this, 22), Ui.dp(this, 18), Ui.dp(this, 30));
         scroll.addView(root, new FrameLayout.LayoutParams(-1, -2));
 
-        root.addView(pageTitle(Ui.label(this, "Кастомизация", 26f, Ui.TEXT),
-                "Тема, иконки и фон"));
+        root.addView(pageTitle(Ui.label(this, getString(R.string.custom_hub_title), 26f, Ui.TEXT),
+                getString(R.string.custom_hub_subtitle)));
 
         root.addView(customBlock(M3Icons.palette(Ui.ACCENT, Ui.dp(this, 24)),
-                "Тема", "Установка .itz", ThemeActivity.class));
+                getString(R.string.nav_theme), getString(R.string.custom_block_theme_sub), ThemeActivity.class));
         root.addView(customBlock(M3Icons.tune(Ui.ACCENT, Ui.dp(this, 24)),
-                "Системные Настройки", "Перекраска акцента и Monet", SettingsThemeActivity.class));
+                getString(R.string.st_title), getString(R.string.custom_block_settings_sub), SettingsThemeActivity.class));
         root.addView(customBlock(M3Icons.grid(Ui.ACCENT, Ui.dp(this, 24)),
-                "Иконки", "Перекраска и паки", IconsActivity.class));
+                getString(R.string.nav_icons), getString(R.string.custom_block_icons_sub), IconsActivity.class));
         root.addView(customBlock(M3Icons.font(Ui.ACCENT, Ui.dp(this, 24)),
-                "Шрифты", "Системные шрифты", FontActivity.class));
+                getString(R.string.nav_fonts), getString(R.string.custom_block_fonts_sub), FontActivity.class));
         root.addView(customBlock(M3Icons.shield(Ui.ACCENT, Ui.dp(this, 24)),
-                "Прочее", "Защита фона и ADB-мост", MiscActivity.class));
+                getString(R.string.nav_misc), getString(R.string.custom_block_misc_sub), MiscActivity.class));
         return scroll;
     }
 
@@ -2785,8 +2801,8 @@ public class Main extends Activity {
         root.setPadding(Ui.dp(this, 18), Ui.dp(this, 22), Ui.dp(this, 18), Ui.dp(this, 30));
         scroll.addView(root, new FrameLayout.LayoutParams(-1, -2));
 
-        TextView title = Ui.label(this, "Шрифты", 26f, Ui.TEXT);
-        root.addView(pageTitle(title, "Замена TTF в /data/vfonts"));
+        TextView title = Ui.label(this, getString(R.string.font_title), 26f, Ui.TEXT);
+        root.addView(pageTitle(title, getString(R.string.font_subtitle)));
 
         fontThemeHint = hintCard();
         fontThemeHint.setVisibility(View.GONE);
@@ -2798,14 +2814,14 @@ public class Main extends Activity {
         LinearLayout fileCard = Ui.col(this);
         fileCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         fileCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        fileCard.addView(Ui.section(this, "Файл шрифта (.ttf)"));
+        fileCard.addView(Ui.section(this, getString(R.string.font_file_label)));
 
-        fontThemeFileText = Ui.text(this, "файл не выбран", 14f, Ui.TEXT);
+        fontThemeFileText = Ui.text(this, getString(R.string.file_not_selected), 14f, Ui.TEXT);
         LinearLayout.LayoutParams fileLp = new LinearLayout.LayoutParams(-2, -2);
         fileLp.topMargin = Ui.dp(this, 8);
         fileCard.addView(fontThemeFileText, fileLp);
 
-        View choose = pillButton(M3Icons.folder(Ui.ACCENT, Ui.dp(this, 18)), "Выбрать .ttf",
+        View choose = pillButton(M3Icons.folder(Ui.ACCENT, Ui.dp(this, 18)), getString(R.string.font_pick_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { pickFontFile(); }
                 });
@@ -2819,7 +2835,7 @@ public class Main extends Activity {
 
         // ---- install button
         View install = pillButton(M3Icons.play(Ui.ACCENT, Ui.dp(this, 18)),
-                "Установить и открыть iTheme",
+                getString(R.string.theme_install_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { runFontInstall(); }
                 });
@@ -2832,14 +2848,14 @@ public class Main extends Activity {
         LinearLayout statusCard = Ui.col(this);
         statusCard.setBackground(Ui.shape(this, Ui.INPUT_BG, 12f, Ui.BORDER, 1.2f));
         statusCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 14), Ui.dp(this, 12));
-        fontThemeStatusText = Ui.text(this, "Выберите .ttf и нажмите «Установить»", 13f, Ui.MUTED);
+        fontThemeStatusText = Ui.text(this, getString(R.string.font_hint), 13f, Ui.MUTED);
         statusCard.addView(fontThemeStatusText);
         LinearLayout.LayoutParams statusLp = new LinearLayout.LayoutParams(-1, -2);
         statusLp.bottomMargin = Ui.dp(this, 14);
         root.addView(statusCard, statusLp);
 
         TextView note = Ui.text(this,
-                "Копия — в Download/gctune. Перед заменой создаются бэкапы .bak.", 11.5f, Ui.MUTED);
+                getString(R.string.font_copy_info), 11.5f, Ui.MUTED);
         LinearLayout.LayoutParams noteLp = new LinearLayout.LayoutParams(-1, -2);
         noteLp.bottomMargin = Ui.dp(this, 24);
         root.addView(note, noteLp);
@@ -2863,8 +2879,8 @@ public class Main extends Activity {
         root.setPadding(Ui.dp(this, 18), Ui.dp(this, 22), Ui.dp(this, 18), Ui.dp(this, 30));
         scroll.addView(root, new FrameLayout.LayoutParams(-1, -2));
 
-        TextView title = Ui.label(this, "Системные Настройки", 26f, Ui.TEXT);
-        root.addView(pageTitle(title, "Перекраска акцентов и переключателей"));
+        TextView title = Ui.label(this, getString(R.string.st_title), 26f, Ui.TEXT);
+        root.addView(pageTitle(title, getString(R.string.st_subtitle)));
 
         stHint = hintCard();
         stHint.setVisibility(View.GONE);
@@ -2876,7 +2892,7 @@ public class Main extends Activity {
         LinearLayout prevCard = Ui.col(this);
         prevCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         prevCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        prevCard.addView(Ui.section(this, "Предпросмотр акцента Настроек"));
+        prevCard.addView(Ui.section(this, getString(R.string.st_preview)));
 
         LinearLayout prevRow = new LinearLayout(this);
         prevRow.setOrientation(LinearLayout.HORIZONTAL);
@@ -2892,7 +2908,7 @@ public class Main extends Activity {
         prevTextCol.setPadding(Ui.dp(this, 12), 0, Ui.dp(this, 8), 0);
         stPreviewAccentText = Ui.text(this, String.format("#%06X", stColor & 0xFFFFFF), 15f, stColor);
         stPreviewAccentText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        TextView prevSub = Ui.text(this, "Акцент тумблеров, кнопок и ползунков в Настройках", 11.5f, Ui.MUTED);
+        TextView prevSub = Ui.text(this, getString(R.string.st_preview_sub), 11.5f, Ui.MUTED);
         prevTextCol.addView(stPreviewAccentText);
         prevTextCol.addView(prevSub);
         prevRow.addView(prevTextCol, new LinearLayout.LayoutParams(0, -2, 1f));
@@ -2911,7 +2927,7 @@ public class Main extends Activity {
         LinearLayout modeCard = Ui.col(this);
         modeCard.setBackground(Ui.shape(this, Ui.SURFACE, 12f, Ui.BORDER_SOFT, 1f));
         modeCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14), Ui.dp(this, 14));
-        modeCard.addView(Ui.section(this, "Режим цвета"));
+        modeCard.addView(Ui.section(this, getString(R.string.st_color_mode)));
 
         LinearLayout monetRow = new LinearLayout(this);
         monetRow.setOrientation(LinearLayout.HORIZONTAL);
@@ -2920,8 +2936,8 @@ public class Main extends Activity {
         monetRowLp.topMargin = Ui.dp(this, 8);
 
         LinearLayout monetTextCol = Ui.col(this);
-        monetTextCol.addView(Ui.text(this, "Monet (цвета из обоев)", 14f, Ui.TEXT));
-        monetTextCol.addView(Ui.text(this, "Автоматически брать акцент из текущих обоев", 11.5f, Ui.MUTED));
+        monetTextCol.addView(Ui.text(this, getString(R.string.icons_monet), 14f, Ui.TEXT));
+        monetTextCol.addView(Ui.text(this, getString(R.string.st_monet_sub), 11.5f, Ui.MUTED));
         monetRow.addView(monetTextCol, new LinearLayout.LayoutParams(0, -2, 1f));
 
         final MaterialSwitch stMonetSw = new MaterialSwitch(this);
@@ -2993,7 +3009,7 @@ public class Main extends Activity {
                 stManualBox.setVisibility(checked ? View.GONE : View.VISIBLE);
                 if (checked) {
                     setSettingsThemeColor(getMonetPrimaryColor());
-                    toast("Акцент взят из обоев (Monet)");
+                    toast(getString(R.string.st_monet_applied));
                 }
                 saveSettingsThemePrefs();
             }
@@ -3005,7 +3021,7 @@ public class Main extends Activity {
 
         // ---- apply button
         View apply = pillButton(M3Icons.play(Ui.ACCENT, Ui.dp(this, 18)),
-                "Перекрасить Настройки",
+                getString(R.string.st_apply_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { runSettingsThemeApply(); }
                 });
@@ -3017,14 +3033,14 @@ public class Main extends Activity {
         LinearLayout statusCard = Ui.col(this);
         statusCard.setBackground(Ui.shape(this, Ui.INPUT_BG, 12f, Ui.BORDER, 1.2f));
         statusCard.setPadding(Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 14), Ui.dp(this, 12));
-        stStatusText = Ui.text(this, "Выберите режим цвета и нажмите «Перекрасить Настройки»", 13f, Ui.MUTED);
+        stStatusText = Ui.text(this, getString(R.string.st_hint), 13f, Ui.MUTED);
         statusCard.addView(stStatusText);
         LinearLayout.LayoutParams statusLp = new LinearLayout.LayoutParams(-1, -2);
         statusLp.bottomMargin = Ui.dp(this, 14);
         root.addView(statusCard, statusLp);
 
         TextView note = Ui.text(this,
-                "Генерирует системный акцент через Fabricated Overlay и тему OriginOS. Требуется режим игры.",
+                getString(R.string.st_desc),
                 11.5f, Ui.MUTED);
         LinearLayout.LayoutParams noteLp = new LinearLayout.LayoutParams(-1, -2);
         noteLp.bottomMargin = Ui.dp(this, 24);
@@ -3072,18 +3088,18 @@ public class Main extends Activity {
 
     private void runSettingsThemeApply() {
         if (busy) {
-            toast("Дождитесь текущей команды");
+            toast(getString(R.string.wait_current_cmd));
             return;
         }
         saveSettingsThemePrefs();
         stRun = true;
-        stStatus("Применяю акцент к системным Настройкам…", Ui.ACCENT);
+        stStatus(getString(R.string.st_applying), Ui.ACCENT);
         showStHint();
         String cmd = settingsThemeCommand();
         if (!apply(cmd)) {
             stRun = false;
             hideStHint();
-            stStatus("GC Tune не в списке игр — добавьте приложение и повторите", Ui.ERROR);
+            stStatus(getString(R.string.not_in_game_list_err), Ui.ERROR);
         }
     }
 
@@ -3147,12 +3163,12 @@ public class Main extends Activity {
         hideStHint();
         String out = (ok && e != null && e.out != null) ? e.out : "";
         if (!ok) {
-            stStatus("Нет ответа от uid 1000 — откройте режим игры и повторите", Ui.ERROR);
+            stStatus(getString(R.string.no_resp_uid1000), Ui.ERROR);
         } else if (out.contains("SETTINGS_APPLIED")) {
-            stStatus("Акцент применен к Настройкам! Настройки перезапущены.", Ui.ACCENT);
-            toast("Настройки перекрашены!");
+            stStatus(getString(R.string.st_success), Ui.ACCENT);
+            toast(getString(R.string.st_recolored_toast));
         } else {
-            stStatus("Команда выполнена — проверьте системные Настройки", Ui.TEXT);
+            stStatus(getString(R.string.st_check_settings), Ui.TEXT);
         }
     }
 
@@ -3163,9 +3179,9 @@ public class Main extends Activity {
                 "application/octet-stream", "font/ttf", "application/x-font-ttf", "*/*"});
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         try {
-            startActivityForResult(Intent.createChooser(intent, "Файл шрифта (.ttf)"), REQ_PICK_FONT);
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.font_file_label)), REQ_PICK_FONT);
         } catch (Throwable t) {
-            toast("Проводник недоступен");
+            toast(getString(R.string.explorer_unavailable));
         }
     }
 
@@ -3199,25 +3215,25 @@ public class Main extends Activity {
 
     private void runFontInstall() {
         if (busy) {
-            toast("Дождитесь текущей команды");
+            toast(getString(R.string.wait_current_cmd));
             return;
         }
         if (fontStaging) {
-            toast("Файл ещё готовится — подождите");
+            toast(getString(R.string.file_preparing));
             return;
         }
         if (fontStagedPath == null || fontStagedPath.isEmpty()) {
-            toast("Сначала выберите .ttf");
+            toast(getString(R.string.font_pick_first));
             return;
         }
         fontThemeRun = true;
-        fontStatus("Команда отправлена — откройте режим игры…", Ui.ACCENT);
+        fontStatus(getString(R.string.cmd_sent_open_game), Ui.ACCENT);
         showFontHint();
         String cmd = fontCommand();
         if (!apply(cmd)) {
             fontThemeRun = false;
             hideFontHint();
-            fontStatus("GC Tune не в списке игр — добавьте приложение и повторите", Ui.ERROR);
+            fontStatus(getString(R.string.not_in_game_list_err), Ui.ERROR);
         }
     }
 
@@ -3231,30 +3247,29 @@ public class Main extends Activity {
         hideFontHint();
         String out = (ok && e != null && e.out != null) ? e.out : "";
         if (!ok) {
-            fontStatus("Нет ответа от uid 1000 — откройте режим игры и повторите", Ui.ERROR);
+            fontStatus(getString(R.string.no_resp_uid1000), Ui.ERROR);
         } else if (out.contains("SRC_UNREADABLE")) {
-            fontStatus("uid 1000 не может прочитать файл-источник", Ui.ERROR);
+            fontStatus(getString(R.string.theme_src_unreadable), Ui.ERROR);
         } else if (out.contains("SRC_STALE")) {
-            fontStatus("Источник не совпадает с выбранным файлом — повторите выбор", Ui.ERROR);
+            fontStatus(getString(R.string.theme_src_stale), Ui.ERROR);
         } else if (out.contains("NO_FONT_FOUND")) {
-            fontStatus("В /data/vfonts/ нет доступных TTF-файлов. Скачайте шрифт в iTheme и повторите.", Ui.ERROR);
+            fontStatus(getString(R.string.font_no_fonts_found), Ui.ERROR);
         } else if (out.contains("FAIL:MISSING_TTF:") && !out.contains("OK:")) {
-            fontStatus("TTF-файл исчез во время установки. Повторите поиск. Подробности во вкладке Shell.", Ui.ERROR);
+            fontStatus(getString(R.string.font_missing_ttf), Ui.ERROR);
         } else if (out.contains("NO_PKG")) {
-            fontStatus("Пакет iTheme определить не удалось — подробности в консоли", Ui.ERROR);
+            fontStatus(getString(R.string.theme_no_itheme_pkg), Ui.ERROR);
         } else if (!out.contains("OK:")) {
-            fontStatus("Запись не удалась — вывод в консоли (вкладка Shell)", Ui.ERROR);
+            fontStatus(getString(R.string.theme_write_fail), Ui.ERROR);
         } else {
             int okCount = countOccurrences(out, "OK:");
             int failCount = countOccurrences(out, "FAIL:");
-            String msg = "Заменено файлов: " + okCount
-                    + (failCount > 0 ? ", ошибок: " + failCount : "");
+            String msg = getString(R.string.theme_replaced_stats, okCount, (failCount > 0 ? getString(R.string.theme_error_suffix, failCount) : ""));
             if (out.contains("APP_FAILED")) {
-                fontStatus(msg + " — iTheme не открылся, вывод в консоли", Ui.ERROR);
+                fontStatus(msg + getString(R.string.theme_itheme_not_opened), Ui.ERROR);
             } else if (out.contains("APP_OPENED")) {
-                fontStatus(msg + ", iTheme открыт — примените шрифт и перезагрузитесь — применяйте тему", Ui.ACCENT);
+                fontStatus(msg + getString(R.string.font_success), Ui.ACCENT);
             } else {
-                fontStatus(msg + " — подробности в консоли", Ui.TEXT);
+                fontStatus(msg + " — " + getString(R.string.details_in_console), Ui.TEXT);
             }
         }
     }
@@ -3263,15 +3278,15 @@ public class Main extends Activity {
     private void stageFontFile(final Uri src) {
         if (src == null) return;
         if (fontStaging) {
-            toast("Файл ещё готовится");
+            toast(getString(R.string.file_preparing));
             return;
         }
         fontStaging = true;
         fontStagedPath = null;
         fontStagedMd5 = null;
-        fontStatus("Читаю файл…", Ui.MUTED);
+        fontStatus(getString(R.string.reading_file), Ui.MUTED);
         final String picked = queryDisplayName(src);
-        if (fontThemeFileText != null) fontThemeFileText.setText("подготовка…");
+        if (fontThemeFileText != null) fontThemeFileText.setText(getString(R.string.preparing));
 
         new Thread(new Runnable() {
             @Override public void run() {
@@ -3309,7 +3324,7 @@ public class Main extends Activity {
                             }
                         }
                         if (staged == null) {
-                            throw firstErr != null ? firstErr : new Exception("копирование не удалось");
+                            throw firstErr != null ? firstErr : new Exception(getString(R.string.copy_failed));
                         }
                         md5 = md5File(new File(staged));
                         path = staged;
@@ -3331,7 +3346,7 @@ public class Main extends Activity {
                             fontStagedMd5 = fm;
                             fontStagedBytes = size;
                             fontThemeFileText.setText(picked + " · " + sizeTxt + "\n" + fp);
-                            fontStatus("Файл готов, md5 " + fm + " — можно устанавливать", Ui.TEXT);
+                            fontStatus(getString(R.string.file_ready_md5, fm), Ui.TEXT);
                         }
                     });
                 } catch (final Throwable t) {
@@ -3340,8 +3355,8 @@ public class Main extends Activity {
                             fontStaging = false;
                             fontStagedPath = null;
                             fontStagedMd5 = null;
-                            fontThemeFileText.setText("файл не выбран");
-                            fontStatus("Ошибка подготовки: " + t.getMessage(), Ui.ERROR);
+                            fontThemeFileText.setText(getString(R.string.file_not_selected));
+                            fontStatus(getString(R.string.prep_error, t.getMessage()), Ui.ERROR);
                         }
                     });
                 }
@@ -3376,9 +3391,9 @@ public class Main extends Activity {
         Uri dst = cr.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, cv);
         if (dst == null) throw new Exception("MediaStore insert failed");
         try (InputStream in = cr.openInputStream(src)) {
-            if (in == null) throw new Exception("источник недоступен");
+            if (in == null) throw new Exception("source unavailable");
             try (OutputStream out = cr.openOutputStream(dst)) {
-                if (out == null) throw new Exception("хранилище недоступно");
+                if (out == null) throw new Exception("storage unavailable");
                 byte[] buf = new byte[64 * 1024];
                 int n;
                 while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
@@ -3411,13 +3426,9 @@ public class Main extends Activity {
     }
 
     // ----------------------------------------------------------------- misc
-    private static final String ADB_EXAMPLES =
-            "# команда через канал uid1000\n"
-            + "adb shell content call --uri content://com.poc.gctune.bridge --method exec --arg \"id\" --extra wait:i:8\n\n"
-            + "# результат: ack|STATUS|rc|base64\n"
-            + "adb shell settings get secure gc_tune_adb_out\n\n"
-            + "# или скрипт из репозитория\n"
-            + ".\\gctune-adb.ps1 \"id\"";
+    private String adbExamples() {
+        return getString(R.string.adb_examples);
+    }
 
     /** Whitelist + appops + standby for ANY package, applied via uid1000. */
     private String hardenCommand(String pkg) {
@@ -3482,17 +3493,17 @@ public class Main extends Activity {
         root.setPadding(Ui.dp(this, 18), Ui.dp(this, 22), Ui.dp(this, 18), Ui.dp(this, 30));
         scroll.addView(root, new FrameLayout.LayoutParams(-1, -2));
 
-        root.addView(pageTitle(Ui.label(this, "Прочее", 26f, Ui.TEXT),
-                "Живучесть фона и ADB-мост"));
+        root.addView(pageTitle(Ui.label(this, getString(R.string.misc_title), 26f, Ui.TEXT),
+                getString(R.string.misc_subtitle)));
 
         // ---- unkillable background: pick any installed app, toggle protection & freeze
         LinearLayout keepCard = Ui.col(this);
         keepCard.setBackground(Ui.shape(this, Ui.SURFACE, 24f, Ui.BORDER_SOFT, 1.2f));
         keepCard.setPadding(Ui.dp(this, 16), Ui.dp(this, 16), Ui.dp(this, 16), Ui.dp(this, 16));
-        keepCard.addView(Ui.section(this, "Защита приложений от выгрузки"));
+        keepCard.addView(Ui.section(this, getString(R.string.misc_protection_title)));
 
         TextView desc = Ui.text(this,
-                "Добавление в белый список батареи Doze (cmd deviceidle whitelist) + разрешение фоновой работы без ограничений.",
+                getString(R.string.misc_protection_desc),
                 11.5f, Ui.MUTED);
         LinearLayout.LayoutParams descLp = new LinearLayout.LayoutParams(-1, -2);
         descLp.topMargin = Ui.dp(this, 4);
@@ -3505,9 +3516,9 @@ public class Main extends Activity {
         targetBox.setPadding(Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 14), Ui.dp(this, 12));
 
         LinearLayout targetCol = Ui.col(this);
-        miscHardenTarget = Ui.text(this, "Цель: GC Tune", 14f, Ui.TEXT);
+        miscHardenTarget = Ui.text(this, getString(R.string.misc_target, "GC Tune"), 14f, Ui.TEXT);
         targetCol.addView(miscHardenTarget);
-        TextView targetSub = Ui.text(this, "Нажмите «Выбрать из списка» для смены", 11f, Ui.MUTED);
+        TextView targetSub = Ui.text(this, getString(R.string.misc_target_hint), 11f, Ui.MUTED);
         LinearLayout.LayoutParams tsLp = new LinearLayout.LayoutParams(-1, -2);
         tsLp.topMargin = Ui.dp(this, 2);
         targetCol.addView(targetSub, tsLp);
@@ -3534,13 +3545,13 @@ public class Main extends Activity {
 
         LinearLayout btnRow = Ui.row(this);
         View pickBtn = pillButton(M3Icons.folder(Ui.ACCENT, Ui.dp(this, 18)),
-                "Список приложений",
+                getString(R.string.misc_app_list_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { pickHardenApp(); }
                 });
         btnRow.addView(pickBtn, new LinearLayout.LayoutParams(0, -2, 1f));
         View frzBtn = pillButton(M3Icons.stop(Ui.ACCENT, Ui.dp(this, 18)),
-                "Заморозить",
+                getString(R.string.misc_freeze_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { freezeRun(); }
                 });
@@ -3557,7 +3568,7 @@ public class Main extends Activity {
         keepCard.addView(miscHardenStatus, hardenStLp);
 
         LinearLayout keepRow = Ui.row(this);
-        keepRow.addView(Ui.label(this, "Своя служба в фоне", 14f, Ui.TEXT),
+        keepRow.addView(Ui.label(this, getString(R.string.misc_keepalive_title), 14f, Ui.TEXT),
                 new LinearLayout.LayoutParams(0, -2, 1f));
 
         keepSwitch = new MaterialSwitch(this);
@@ -3589,12 +3600,12 @@ public class Main extends Activity {
         LinearLayout bridgeCard = Ui.col(this);
         bridgeCard.setBackground(Ui.shape(this, Ui.SURFACE, 24f, Ui.BORDER_SOFT, 1.2f));
         bridgeCard.setPadding(Ui.dp(this, 16), Ui.dp(this, 16), Ui.dp(this, 16), Ui.dp(this, 16));
-        bridgeCard.addView(Ui.section(this, "ADB-мост"));
+        bridgeCard.addView(Ui.section(this, getString(R.string.misc_adb_title)));
 
         LinearLayout bridgeRow = Ui.row(this);
         LinearLayout bridgeLbl = Ui.col(this);
-        bridgeLbl.addView(Ui.label(this, "Команды по ADB", 14f, Ui.TEXT));
-        TextView bridgeSub = Ui.text(this, "Только adb shell и root", 11.5f, Ui.MUTED);
+        bridgeLbl.addView(Ui.label(this, getString(R.string.misc_adb_sub), 14f, Ui.TEXT));
+        TextView bridgeSub = Ui.text(this, getString(R.string.misc_adb_sub_desc), 11.5f, Ui.MUTED);
         LinearLayout.LayoutParams bridgeSubLp = new LinearLayout.LayoutParams(-1, -2);
         bridgeSubLp.topMargin = Ui.dp(this, 3);
         bridgeLbl.addView(bridgeSub, bridgeSubLp);
@@ -3626,7 +3637,7 @@ public class Main extends Activity {
         LinearLayout exCard = Ui.col(this);
         exCard.setBackground(Ui.shape(this, Ui.INPUT_BG, 10f, Ui.BORDER, 1f));
         exCard.setPadding(Ui.dp(this, 10), Ui.dp(this, 9), Ui.dp(this, 10), Ui.dp(this, 9));
-        TextView ex = Ui.text(this, ADB_EXAMPLES, 10.5f, Ui.PROMPT);
+        TextView ex = Ui.text(this, getAdbExamples(), 10.5f, Ui.PROMPT);
         ex.setTypeface(Typeface.MONOSPACE);
         ex.setTextIsSelectable(true);
         exCard.addView(ex);
@@ -3635,7 +3646,7 @@ public class Main extends Activity {
         bridgeCard.addView(exCard, exLp);
 
         View copyEx = pillButton(M3Icons.clipboard(Ui.ACCENT, Ui.dp(this, 18)),
-                "Копировать команды",
+                getString(R.string.misc_copy_cmds_btn),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) {
                         try {
@@ -3643,10 +3654,10 @@ public class Main extends Activity {
                                     (android.content.ClipboardManager)
                                             getSystemService(CLIPBOARD_SERVICE);
                             cl.setPrimaryClip(android.content.ClipData.newPlainText(
-                                    "GC Tune ADB", ADB_EXAMPLES));
-                            toast("Команды скопированы");
+                                    "GC Tune ADB", getAdbExamples()));
+                            toast(getString(R.string.misc_copy_cmds_toast));
                         } catch (Throwable t) {
-                            toast("Не удалось скопировать");
+                            toast(getString(R.string.copy_failed));
                         }
                     }
                 });
@@ -3654,7 +3665,7 @@ public class Main extends Activity {
         copyExLp.topMargin = Ui.dp(this, 10);
         bridgeCard.addView(copyEx, copyExLp);
 
-        TextView bridgeWarn = Ui.text(this, "Включайте только на время работы.", 11f, Ui.MUTED);
+        TextView bridgeWarn = Ui.text(this, getString(R.string.misc_adb_warn), 11f, Ui.MUTED);
         LinearLayout.LayoutParams warnLp = new LinearLayout.LayoutParams(-1, -2);
         warnLp.topMargin = Ui.dp(this, 10);
         bridgeCard.addView(bridgeWarn, warnLp);
@@ -3704,10 +3715,10 @@ public class Main extends Activity {
             int pad = Ui.dp(this, 14);
             body.setPadding(pad, pad, pad, pad);
 
-            body.addView(Ui.section(this, "Приложение"));
+            body.addView(Ui.section(this, getString(R.string.misc_app_picker_title)));
 
             final EditText q = new EditText(this);
-            q.setHint("Поиск");
+            q.setHint(getString(R.string.search));
             q.setHintTextColor(Ui.MUTED);
             q.setTextColor(Ui.TEXT);
             q.setTextSize(14f);
@@ -3754,8 +3765,7 @@ public class Main extends Activity {
                             list.addView(appRow(dlg, r, r.pkg.equals(cur)));
                         }
                         if (list.getChildCount() == 0) {
-                            TextView none = Ui.text(Main.this,
-                                    "Ничего не найдено", 13f, Ui.MUTED);
+                            TextView none = Ui.text(Main.this, getString(R.string.nothing_found), 13f, Ui.MUTED);
                             none.setGravity(Gravity.CENTER);
                             LinearLayout.LayoutParams nLp =
                                     new LinearLayout.LayoutParams(-1, -2);
@@ -3810,7 +3820,7 @@ public class Main extends Activity {
                 }
             }).start();
         } catch (Throwable t) {
-            toast("Список приложений недоступен");
+            toast(getString(R.string.icons_no_apps_list));
         }
     }
 
@@ -3896,7 +3906,7 @@ public class Main extends Activity {
         if (!apply(cmd)) {
             miscRun = false;
             if (miscHardenStatus != null) {
-                miscHardenStatus.setText("не отправлено — нет статуса игры или канал занят");
+                miscHardenStatus.setText(getString(R.string.misc_not_sent));
                 miscHardenStatus.setTextColor(Ui.ERROR);
             }
         }
@@ -3904,20 +3914,19 @@ public class Main extends Activity {
 
     /** Sends the hardening probe for the stored target through the channel. */
     private void runHarden() {
-        runMisc("harden", hardenCommand(hardenPkg()), "добавляю в белый список Doze…");
+        runMisc("harden", hardenCommand(hardenPkg()), getString(R.string.misc_adding_doze));
     }
 
     private void runUnharden() {
-        runMisc("unharden", unhardenCommand(hardenPkg()), "удаляю из белого списка Doze…");
+        runMisc("unharden", unhardenCommand(hardenPkg()), getString(R.string.misc_removing_doze));
     }
 
     private void freezeRun() {
-        runMisc("freeze", freezeCommand(hardenPkg()),
-                "замораживаю " + prefs.getString("harden_label", "GC Tune") + "…");
+        runMisc("freeze", freezeCommand(hardenPkg()), getString(R.string.misc_freezing, prefs.getString("harden_label", "GC Tune")));
     }
 
     private void unfreezeRun() {
-        runMisc("unfreeze", unfreezeCommand(hardenPkg()), "снимаю заморозку…");
+        runMisc("unfreeze", unfreezeCommand(hardenPkg()), getString(R.string.misc_unfreezing));
     }
 
     /** Short read-back of the DOZE/SUSP/DIS lines produced by the commands. */
@@ -3926,7 +3935,7 @@ public class Main extends Activity {
         if (miscHardenStatus == null) return;
         String out = (ok && e != null && e.out != null) ? e.out : "";
         if (!ok) {
-            miscHardenStatus.setText("Нет ответа — откройте режим игры");
+            miscHardenStatus.setText(getString(R.string.misc_no_resp_game_mode));
             miscHardenStatus.setTextColor(Ui.ERROR);
             return;
         }
@@ -3936,11 +3945,10 @@ public class Main extends Activity {
         boolean hasMarkers = out.contains("SUSP=") || out.contains("DIS=");
         if ("freeze".equals(miscAction)) {
             if (susp || dis) {
-                miscHardenStatus.setText("Заморожено"
-                        + (dis ? " (отключено)" : " (suspended)"));
+                miscHardenStatus.setText(getString(R.string.misc_frozen, (dis ? getString(R.string.misc_disabled_suffix) : " (suspended)")));
                 miscHardenStatus.setTextColor(Ui.ACCENT);
             } else if (hasMarkers) {
-                miscHardenStatus.setText("Фон ограничен, suspend недоступен");
+                miscHardenStatus.setText(getString(R.string.misc_bg_restricted));
                 miscHardenStatus.setTextColor(Ui.MUTED);
             } else {
                 miscHardenStatus.setText(out.replace("\n", " · "));
@@ -3948,23 +3956,23 @@ public class Main extends Activity {
             }
         } else if ("unfreeze".equals(miscAction)) {
             if (hasMarkers && !susp && !dis) {
-                miscHardenStatus.setText("Разморожено");
+                miscHardenStatus.setText(getString(R.string.misc_unfrozen));
                 miscHardenStatus.setTextColor(Ui.ACCENT);
             } else if (hasMarkers) {
-                miscHardenStatus.setText("Частично — вывод в консоли");
+                miscHardenStatus.setText(getString(R.string.misc_partial_console));
                 miscHardenStatus.setTextColor(Ui.ERROR);
             } else {
                 miscHardenStatus.setText(out.replace("\n", " · "));
                 miscHardenStatus.setTextColor(Ui.TEXT);
             }
         } else if ("unharden".equals(miscAction)) {
-            miscHardenStatus.setText("Защита снята (удалено из белого списка)");
+            miscHardenStatus.setText(getString(R.string.misc_protection_removed));
             miscHardenStatus.setTextColor(Ui.MUTED);
         } else if (out.contains("DOZE=false")) {
-            miscHardenStatus.setText("Не в белом списке — проверьте консоль");
+            miscHardenStatus.setText(getString(R.string.misc_not_in_whitelist));
             miscHardenStatus.setTextColor(Ui.ERROR);
         } else if (out.contains("DOZE=true") || out.contains("DOZE=")) {
-            miscHardenStatus.setText("Защищено: белый список Doze + фон разрешён");
+            miscHardenStatus.setText(getString(R.string.misc_protected_status));
             miscHardenStatus.setTextColor(Ui.ACCENT);
         } else {
             miscHardenStatus.setText(out.replace("\n", " · "));
@@ -3977,19 +3985,18 @@ public class Main extends Activity {
         boolean br = prefs.getBoolean("adb_bridge", true);
         String curPkg = hardenPkg();
         if (miscHardenTarget != null) {
-            miscHardenTarget.setText("Цель: "
-                    + prefs.getString("harden_label", "GC Tune"));
+            miscHardenTarget.setText(getString(R.string.misc_target, prefs.getString("harden_label", "GC Tune")));
         }
         if (targetSw != null) {
             boolean isProtected = prefs.getBoolean("pkg_protected_" + curPkg, PKG.equals(curPkg));
             targetSw.setChecked(isProtected);
         }
         if (miscKeepStatus != null) {
-            miscKeepStatus.setText(keep ? "служба активна" : "выкл.");
+            miscKeepStatus.setText(keep ? getString(R.string.misc_service_active) : getString(R.string.misc_service_off));
             miscKeepStatus.setTextColor(keep ? Ui.ACCENT : Ui.MUTED);
         }
         if (miscBridgeStatus != null) {
-            StringBuilder sb = new StringBuilder(br ? "включён" : "выключен");
+            StringBuilder sb = new StringBuilder(br ? getString(R.string.misc_bridge_on) : getString(R.string.misc_bridge_off));
             if (br && bridgeLastCmd != null && !bridgeLastCmd.isEmpty()) {
                 sb.append(" · ").append(bridgeLastCmd);
             }
@@ -4032,12 +4039,11 @@ public class Main extends Activity {
      * the waiting binder call.
      */
     private Bundle bridgeSend(String cmd) {
-        if (busy) return bridgeErr("busy", "канал занят — дождитесь текущей команды", 0);
+        if (busy) return bridgeErr("busy", getString(R.string.wait_current_cmd), 0);
         boolean game = isGame();
         boolean req = prefs.getBoolean("require_game", true);
         if (req && !game) {
-            String msg = "нет статуса игры — добавьте GC Tune в список игр "
-                    + "(Ультраигровой режим → Поддерживаемые игры)";
+            String msg = getString(R.string.not_in_game_list_err);
             writeAdbMirror(0, "ERROR", "-", msg);
             return bridgeErr("no_game", msg, 0);
         }
@@ -4045,7 +4051,7 @@ public class Main extends Activity {
         bridgeLastCmd = c;
         updateMiscStatus();
         if (!apply(c)) {
-            String msg = "не отправлено — канал занят или нет статуса игры";
+            String msg = getString(R.string.misc_not_sent);
             writeAdbMirror(0, "ERROR", "-", msg);
             return bridgeErr("send_failed", msg, 0);
         }
@@ -4064,7 +4070,7 @@ public class Main extends Activity {
         if (ok) {
             out = e != null && e.out != null ? e.out : "";
         } else {
-            out = failReason != null ? failReason : "нет ответа от uid 1000";
+            out = failReason != null ? failReason : getString(R.string.no_resp_uid1000);
             rc = RC_UNKNOWN;
         }
         writeAdbMirror(ack, ok ? "OK" : "FAIL", String.valueOf(rc), out);
@@ -4085,11 +4091,11 @@ public class Main extends Activity {
         @Override
         public Bundle exec(final String cmd, final int waitSec) {
             if (cmd == null || cmd.trim().isEmpty()) {
-                return bridgeErr("empty", "пустая команда", 0);
+                return bridgeErr("empty", getString(R.string.shell_empty_cmd), 0);
             }
             if (!prefs.getBoolean("adb_bridge", true)) {
                 return bridgeErr("disabled",
-                        "мост выключен — включите «Команды по ADB» на странице «Прочее»", 0);
+                        getString(R.string.bridge_disabled), 0);
             }
             bridgeResult = null;
             final CountDownLatch latch = new CountDownLatch(1);
@@ -4163,9 +4169,9 @@ public class Main extends Activity {
                 appendStyled(sb, "$ ", Ui.ACCENT, 12f);
                 appendStyled(sb, cmd + "\n", Ui.TEXT, 12f);
                 if (e.pending) {
-                    appendStyled(sb, "…выполняется\n", Ui.PROMPT, 11f);
+                    appendStyled(sb, getString(R.string.status_running), Ui.PROMPT, 11f);
                 } else if (e.failed) {
-                    appendStyled(sb, "нет ответа от uid 1000\n", Ui.ERROR, 11f);
+                    appendStyled(sb, getString(R.string.no_resp_uid1000_short), Ui.ERROR, 11f);
                 } else {
                     boolean err = e.rc != RC_UNKNOWN && e.rc != 0;
                     String out = e.out != null ? e.out : "";
@@ -4215,7 +4221,7 @@ public class Main extends Activity {
             byte[] data = Base64.decode(base64Output, Base64.DEFAULT);
             return new String(data, StandardCharsets.UTF_8);
         } catch (Exception e) {
-            return "Ошибка декодирования: " + e.getMessage();
+            return getString(R.string.shell_decode_error, e.getMessage());
         }
     }
 
@@ -4249,10 +4255,10 @@ public class Main extends Activity {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         try {
-            startActivityForResult(Intent.createChooser(intent, "Файл со скриптом (.sh / .txt)"),
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.shell_file_filter)),
                     REQ_IMPORT_FILE);
         } catch (Throwable t) {
-            toast("Не удалось открыть проводник");
+            toast(getString(R.string.explorer_unavailable));
         }
     }
 
@@ -4291,9 +4297,9 @@ public class Main extends Activity {
             if (sb.length() > 0 && !sb.toString().endsWith(";")) sb.append(";");
             cmdInput.setText(sb.toString());
             cmdInput.setSelection(cmdInput.getText().length());
-            toast("Импортировано строк: " + lines);
+            toast(getString(R.string.shell_imported_lines, lines));
         } catch (Exception e) {
-            logStatus("Ошибка импорта: " + e.getMessage());
+            logStatus(getString(R.string.shell_import_error, e.getMessage()));
         }
     }
 
@@ -4306,7 +4312,7 @@ public class Main extends Activity {
             if (pasteData != null) {
                 cmdInput.setText(pasteData);
                 cmdInput.setSelection(cmdInput.getText().length());
-                toast("Вставлено из буфера");
+                toast(getString(R.string.shell_pasted));
             }
         }
     }
@@ -4315,7 +4321,7 @@ public class Main extends Activity {
     private void executeCurrentCommand() {
         String raw = cmdInput.getText().toString().trim();
         if (raw.isEmpty()) {
-            toast("Введите команду");
+            toast(getString(R.string.shell_enter_cmd));
             return;
         }
 
@@ -4337,8 +4343,8 @@ public class Main extends Activity {
         boolean game = isGame();
         boolean req = prefs.getBoolean("require_game", true);
         if (req && !game) {
-            logStatus("GC Tune не в списке игр Game Cube");
-            toast("Добавьте GC Tune: Ультраигровой режим → Поддерживаемые игры → Другое");
+            logStatus(getString(R.string.not_in_game_list_err));
+            toast(getString(R.string.not_in_game_list_toast));
             refreshStatus();
             return false;
         }
@@ -4383,8 +4389,8 @@ public class Main extends Activity {
             published = body.equals(Settings.Secure.getString(cr, "gc_tune_cmd"));
         } catch (Throwable ignored) {}
         if (!published) {
-            toast("Команда не опубликована для демона: нет WRITE_SECURE_SETTINGS");
-            logStatus("нет WRITE_SECURE_SETTINGS — выполните: adb shell pm grant com.poc.gctune android.permission.WRITE_SECURE_SETTINGS");
+            toast(getString(R.string.no_write_secure_toast));
+            logStatus(getString(R.string.no_write_secure_log));
         }
 
         Entry e = new Entry();
@@ -4409,16 +4415,16 @@ public class Main extends Activity {
             e.out = null;
         }
         busy = false;
-        resolveBridge(false, e, "отменено");
+        resolveBridge(false, e, getString(R.string.status_canceled));
         if (themeRun) {
             themeRun = false;
             hideHint();
-            themeStatus("Отменено", Ui.MUTED);
+            themeStatus(getString(R.string.status_canceled), Ui.MUTED);
         }
         if (fontThemeRun) {
             fontThemeRun = false;
             hideFontHint();
-            fontStatus("Отменено", Ui.MUTED);
+            fontStatus(getString(R.string.status_canceled), Ui.MUTED);
         }
         setWinTitle(BENIGN_TITLE);
         renderLog();
@@ -4447,8 +4453,8 @@ public class Main extends Activity {
         if (fontThemeRun) fontResult(ok, e);
         if (stRun) settingsThemeResult(ok, e);
         if (miscRun) miscResult(ok, e);
-        resolveBridge(ok, e, "нет ответа от uid 1000");
-        if (!ok) toast("Нет ответа — откройте шторку Game Cube");
+        resolveBridge(ok, e, getString(R.string.no_resp_uid1000));
+        if (!ok) toast(getString(R.string.no_resp_uid1000));
         refreshStatus();
     }
 
@@ -4477,7 +4483,7 @@ public class Main extends Activity {
 
         if (busy) {
             statusDot.setImageDrawable(iconDotOn);
-            statusText.setText("выполняется…");
+            statusText.setText(getString(R.string.status_running_single));
             statusText.setTextColor(Ui.ACCENT);
             runBtn.setImageDrawable(iconStop);
             runBtn.setAlpha(1f);
@@ -4494,11 +4500,11 @@ public class Main extends Activity {
 
         if (game) {
             statusDot.setImageDrawable(iconDotOn);
-            statusText.setText("в списке игр");
+            statusText.setText(getString(R.string.status_in_game_list));
             statusText.setTextColor(Ui.ACCENT);
         } else {
             statusDot.setImageDrawable(iconDotOff);
-            statusText.setText("не в списке игр");
+            statusText.setText(getString(R.string.status_not_in_game_list));
             statusText.setTextColor(Ui.MUTED);
         }
     }

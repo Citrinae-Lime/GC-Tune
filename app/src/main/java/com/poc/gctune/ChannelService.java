@@ -174,15 +174,15 @@ public class ChannelService extends Service {
         try {
             NotificationManager nm = getSystemService(NotificationManager.class);
             if (nm != null && nm.getNotificationChannel(CH) == null) {
-                NotificationChannel ch = new NotificationChannel(CH, "GC Tune",
+                NotificationChannel ch = new NotificationChannel(CH, getString(R.string.app_name),
                         NotificationManager.IMPORTANCE_LOW);
                 ch.setShowBadge(false);
                 nm.createNotificationChannel(ch);
             }
             Notification n = new Notification.Builder(this, CH)
                     .setSmallIcon(android.R.drawable.ic_popup_sync)
-                    .setContentTitle("GC Tune")
-                    .setContentText("Команда выполняется, ждём ответ канала…")
+                    .setContentTitle(getString(R.string.app_name))
+                    .setContentText(getString(R.string.channel_notif_running))
                     .setWhen(System.currentTimeMillis())
                     .setOngoing(true)
                     .build();

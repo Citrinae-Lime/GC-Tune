@@ -1,4 +1,4 @@
-package com.poc.gctune;
+﻿package com.poc.gctune;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -68,8 +68,8 @@ public class BridgeProvider extends ContentProvider {
         Bundle out = new Bundle();
         if (!callerAllowed()) {
             out.putString("status", "denied");
-            out.putString("msg", "только shell/root (uid 2000/0), вызов с uid "
-                    + Binder.getCallingUid() + " отклонён");
+            out.putString("msg", "only shell/root (uid 2000/0) allowed, caller uid "
+                    + Binder.getCallingUid() + " denied");
             Log.w(TAG, "bridge denied uid=" + Binder.getCallingUid());
             return out;
         }
@@ -93,7 +93,7 @@ public class BridgeProvider extends ContentProvider {
                 }
             } catch (Throwable ignored) {}
             out.putString("status", "app_closed");
-            out.putString("msg", "GC Tune не запущен — откройте приложение и повторите");
+            out.putString("msg", "GC Tune is not running — open the app and try again");
             return out;
         }
 
@@ -123,7 +123,7 @@ public class BridgeProvider extends ContentProvider {
         }
 
         out.putString("status", "unknown_method");
-        out.putString("msg", "методы: exec, status, ping");
+        out.putString("msg", "methods: exec, status, ping");
         return out;
     }
 

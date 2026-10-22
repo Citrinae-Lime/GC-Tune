@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GC Tune</string>
+
+    <!-- General / Common -->
+    <string name="cancel">Отмена</string>
+    <string name="close">Закрыть</string>
+    <string name="copied">Вывод скопирован</string>
+    <string name="copy_failed">Не удалось скопировать</string>
+    <string name="search">Поиск</string>
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="file_not_selected">файл не выбран</string>
+    <string name="file_preparing">Файл ещё готовится — подождите</string>
+    <string name="reading_file">Читаю файл…</string>
+    <string name="preparing">подготовка…</string>
+    <string name="file_ready_md5">Файл готов, md5 %1$s — можно устанавливать</string>
+    <string name="prep_error">Ошибка подготовки: %1$s</string>
+    <string name="explorer_unavailable">Проводник недоступен</string>
+    <string name="wait_current_cmd">Дождитесь текущей команды</string>
+    <string name="not_in_game_list_toast">Добавьте GC Tune: Ультраигровой режим → Поддерживаемые игры → Другое</string>
+    <string name="not_in_game_list_err">GC Tune не в списке игр — добавьте приложение и повторите</string>
+    <string name="no_resp_uid1000">Нет ответа от uid 1000 — откройте режим игры и повторите</string>
+    <string name="no_resp_uid1000_short">нет ответа от uid 1000\n</string>
+    <string name="cmd_sent_open_game">Команда отправлена — откройте режим игры…</string>
+    <string name="status_running">…выполняется\n</string>
+    <string name="status_running_single">выполняется…</string>
+    <string name="status_canceled">Отменено</string>
+    <string name="open_game_mode">Откройте режим игры</string>
+    <string name="status_game_cube_running">Команда выполнится сама, как только откроете шторку Game Cube — FpsManager запустит её автоматически.</string>
+    <string name="status_in_game_list">GC Tune в списке игр</string>
+    <string name="status_not_in_game_list">не в списке игр</string>
+    <string name="details_in_console">Подробности в консоли (вкладка Shell)</string>
+    <string name="no_write_secure_toast">Команда не опубликована для демона: нет WRITE_SECURE_SETTINGS</string>
+    <string name="no_write_secure_log">нет WRITE_SECURE_SETTINGS — выполните: adb shell pm grant com.poc.gctune android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="game_cube_supported_games">Поддерживаемые игры</string>
+
+    <!-- Navigation -->
+    <string name="nav_shell">Shell</string>
+    <string name="nav_custom">Кастомизация</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="nav_theme">Тема</string>
+    <string name="nav_icons">Иконки</string>
+    <string name="nav_settings_theme">Системные Настройки</string>
+    <string name="nav_fonts">Шрифты</string>
+    <string name="nav_misc">Прочее</string>
+
+    <!-- Shell Page -->
+    <string name="shell_cmd_hint">Команда или скрипт</string>
+    <string name="shell_console">Консоль</string>
+    <string name="shell_console_empty">Консоль пуста</string>
+    <string name="shell_paste">Вставить</string>
+    <string name="shell_pasted">Вставлено из буфера</string>
+    <string name="shell_enter_cmd">Введите команду</string>
+    <string name="shell_empty_cmd">пустая команда</string>
+    <string name="shell_file_filter">Файл со скриптом (.sh / .txt)</string>
+    <string name="shell_imported_lines">Импортировано строк: %d</string>
+    <string name="shell_import_error">Ошибка импорта: %1$s</string>
+    <string name="shell_decode_error">Ошибка декодирования: %1$s</string>
+    <string name="shell_no_output">(команда выполнена без текстового вывода)</string>
+
+    <!-- Theme Page -->
+    <string name="theme_title">Тема</string>
+    <string name="theme_subtitle">Установка и применение .itz</string>
+    <string name="theme_file_label">Файл темы (.itz)</string>
+    <string name="theme_pick_btn">Выбрать .itz</string>
+    <string name="theme_install_btn">Установить и открыть iTheme</string>
+    <string name="theme_hint">Выберите .itz и нажмите «Установить»</string>
+    <string name="theme_copy_info">Копия файла — в Download/gctune. Применение — при открытом режиме игры.</string>
+    <string name="theme_pick_first">Сначала выберите .itz</string>
+    <string name="theme_id_replaced">id подменены: %d</string>
+    <string name="theme_desc_no_id">description.xml без id — файл не тронут</string>
+    <string name="theme_id_not_replaced">id НЕ подменены: %1$s</string>
+    <string name="theme_src_unreadable">uid 1000 не может прочитать файл-источник</string>
+    <string name="theme_src_stale">Источник не совпадает с выбранным файлом — повторите выбор</string>
+    <string name="theme_no_itz">В папке .../theme/.dwd/.../T нет ни одного .itz</string>
+    <string name="theme_no_itheme_pkg">Пакет iTheme определить не удалось — подробности в консоли</string>
+    <string name="theme_write_fail">Запись не удалась — вывод в консоли (вкладка Shell)</string>
+    <string name="theme_write_fail_file">не удалось записать %1$s</string>
+    <string name="theme_replaced_stats">Заменено файлов: %1$d%2$s</string>
+    <string name="theme_error_suffix">, ошибок: %d</string>
+    <string name="theme_itheme_opened">, iTheme открыт — применяйте тему</string>
+    <string name="theme_itheme_not_opened"> — iTheme не открылся, вывод в консоли</string>
+
+    <!-- Icons Page -->
+    <string name="icons_title">Иконки</string>
+    <string name="icons_subtitle">Перекраска и стилизация иконок</string>
+    <string name="icons_preview">Предпросмотр</string>
+    <string name="icons_source">Источник иконок</string>
+    <string name="icons_source_system">Системные иконки</string>
+    <string name="icons_source_pack_btn">Пак</string>
+    <string name="icons_source_system_status">Источник: системные иконки</string>
+    <string name="icons_color_title">Цвет перекраски</string>
+    <string name="icons_monet">Monet (цвета из обоев)</string>
+    <string name="icons_monet_sub">Автоматически брать цвета темы из обоев</string>
+    <string name="icons_monet_applied">Цвет взят из обоев (Monet)</string>
+    <string name="icons_fine_tune">Тонкая настройка</string>
+    <string name="icons_desat">Обесцвечивание</string>
+    <string name="icons_lighten">Осветление</string>
+    <string name="icons_strength">Сила перекраски</string>
+    <string name="icons_scale">Размер иконки</string>
+    <string name="icons_reset_btn">Сброс настроек</string>
+    <string name="icons_reset_toast">Настройки сброшены</string>
+    <string name="icons_style_layer">Стиль: фон + иконка</string>
+    <string name="icons_separate_layers">Разделять на слои (как IconPack Studio)</string>
+    <string name="icons_bg_color">Цвет фона:</string>
+    <string name="icons_shape">Форма иконки</string>
+    <string name="icons_shape_sub">35 официальных Material 3 форм · Нажмите для выбора</string>
+    <string name="icons_shape_dialog_title">Выберите форму (Material 3 Expressive)</string>
+    <string name="icons_apply_btn">Перекрасить и применить</string>
+    <string name="icons_hint">Выберите цвет и нажмите «Перекрасить»</string>
+    <string name="icons_pack_info">Паки ADW/Nova импортируются. Применение — при открытом режиме игры.</string>
+    <string name="icons_searching_packs">Ищу иконокпаки…</string>
+    <string name="icons_no_packs_found">Иконокпаки не найдены — установите любой пак с Play Market</string>
+    <string name="icons_system_without_pack">Системные иконки (без пака)</string>
+    <string name="icons_dialog_title">Иконокпак</string>
+    <string name="icons_loading_pack">Загружаю «%1$s»…</string>
+    <string name="icons_pack_loaded">Пак загружен: %d иконок в маппинге</string>
+    <string name="icons_pack_unsupported">Пак не поддерживается (нет appfilter.xml)</string>
+    <string name="icons_no_apps_list">Не удалось получить список приложений</string>
+    <string name="icons_recoloring">Перекрашиваю иконки…</string>
+    <string name="icons_rendering_progress">Отрисовано %1$d из %2$d%3$s — ставлю через канал…</string>
+    <string name="icons_rendering_err_suffix"> (ошибок: %d)</string>
+    <string name="icons_no_icons_err">Нет перекрашенных иконок — повторите</string>
+    <string name="icons_busy_err">Предыдущая установка ещё идёт — подождите и повторите</string>
+    <string name="icons_applied">Иконки применены%1$s — проверьте лаунчер%2$s</string>
+    <string name="icons_applied_count_suffix"> (%d иконок)</string>
+    <string name="icons_style_fail_suffix"> (стиль не переключился: нет WRITE_SECURE_SETTINGS)</string>
+
+    <!-- Customization Hub -->
+    <string name="custom_hub_title">Кастомизация</string>
+    <string name="custom_hub_subtitle">Тема, иконки и фон</string>
+    <string name="custom_block_theme_sub">Установка .itz</string>
+    <string name="custom_block_settings_sub">Перекраска акцента и Monet</string>
+    <string name="custom_block_icons_sub">Перекраска и паки</string>
+    <string name="custom_block_fonts_sub">Системные шрифты</string>
+    <string name="custom_block_misc_sub">Защита фона и ADB-мост</string>
+
+    <!-- Settings Theme Page -->
+    <string name="st_title">Системные Настройки</string>
+    <string name="st_subtitle">Перекраска акцентов и переключателей</string>
+    <string name="st_preview">Предпросмотр акцента Настроек</string>
+    <string name="st_preview_sub">Акцент тумблеров, кнопок и ползунков в Настройках</string>
+    <string name="st_color_mode">Режим цвета</string>
+    <string name="st_monet">Monet (цвета из обоев)</string>
+    <string name="st_monet_sub">Автоматически брать акцент из текущих обоев</string>
+    <string name="st_monet_applied">Акцент взят из обоев (Monet)</string>
+    <string name="st_apply_btn">Перекрасить Настройки</string>
+    <string name="st_hint">Выберите режим цвета и нажмите «Перекрасить Настройки»</string>
+    <string name="st_desc">Генерирует системный акцент через Fabricated Overlay и тему OriginOS. Требуется режим игры.</string>
+    <string name="st_applying">Применяю акцент к системным Настройкам…</string>
+    <string name="st_success">Акцент применен к Настройкам! Настройки перезапущены.</string>
+    <string name="st_recolored_toast">Настройки перекрашены!</string>
+    <string name="st_check_settings">Команда выполнена — проверьте системные Настройки</string>
+
+    <!-- Fonts Page -->
+    <string name="font_title">Шрифты</string>
+    <string name="font_subtitle">Замена TTF в /data/vfonts</string>
+    <string name="font_file_label">Файл шрифта (.ttf)</string>
+    <string name="font_pick_btn">Выбрать .ttf</string>
+    <string name="font_install_btn">Установить и открыть iTheme</string>
+    <string name="font_hint">Выберите .ttf и нажмите «Установить»</string>
+    <string name="font_copy_info">Копия — в Download/gctune. Перед заменой создаются бэкапы .bak.</string>
+    <string name="font_pick_first">Сначала выберите .ttf</string>
+    <string name="font_no_fonts_found">В /data/vfonts/ нет доступных TTF-файлов. Скачайте шрифт в iTheme и повторите.</string>
+    <string name="font_missing_ttf">TTF-файл исчез во время установки. Повторите поиск. Подробности во вкладке Shell.</string>
+    <string name="font_success">, iTheme открыт — примените шрифт и перезагрузитесь — применяйте тему</string>
+
+    <!-- Misc Page -->
+    <string name="misc_title">Прочее</string>
+    <string name="misc_subtitle">Живучесть фона и ADB-мост</string>
+    <string name="misc_protection_title">Защита приложений от выгрузки</string>
+    <string name="misc_protection_desc">Добавление в белый список батареи Doze (cmd deviceidle whitelist) + разрешение фоновой работы без ограничений.</string>
+    <string name="misc_target">Цель: %1$s</string>
+    <string name="misc_target_hint">Нажмите «Выбрать из списка» для смены</string>
+    <string name="misc_app_list_btn">Список приложений</string>
+    <string name="misc_freeze_btn">Заморозить</string>
+    <string name="misc_keepalive_title">Своя служба в фоне</string>
+    <string name="misc_keepalive_desc">Липкая фоновая служба + сторожевой таймер</string>
+    <string name="misc_adb_title">ADB-мост</string>
+    <string name="misc_adb_sub">Команды по ADB</string>
+    <string name="misc_adb_sub_desc">Только adb shell и root</string>
+    <string name="misc_copy_cmds_btn">Копировать команды</string>
+    <string name="misc_copy_cmds_toast">Команды скопированы</string>
+    <string name="misc_adb_warn">Включайте только на время работы.</string>
+    <string name="misc_app_picker_title">Приложение</string>
+    <string name="misc_adding_doze">добавляю в белый список Doze…</string>
+    <string name="misc_removing_doze">удаляю из белого списка Doze…</string>
+    <string name="misc_freezing">замораживаю %1$s…</string>
+    <string name="misc_unfreezing">снимаю заморозку…</string>
+    <string name="misc_no_resp_game_mode">Нет ответа — откройте режим игры</string>
+    <string name="misc_frozen">Заморожено%1$s</string>
+    <string name="misc_disabled_suffix"> (отключено)</string>
+    <string name="misc_bg_restricted">Фон ограничен, suspend недоступен</string>
+    <string name="misc_unfrozen">Разморожено</string>
+    <string name="misc_partial_console">Частично — вывод в консоли</string>
+    <string name="misc_protection_removed">Защита снята (удалено из белого списка)</string>
+    <string name="misc_not_in_whitelist">Не в белом списке — проверьте консоль</string>
+    <string name="misc_protected_status">Защищено: белый список Doze + фон разрешён</string>
+    <string name="misc_service_active">служба активна</string>
+    <string name="misc_service_off">выкл.</string>
+    <string name="misc_bridge_on">включён</string>
+    <string name="misc_bridge_off">выключен</string>
+    <string name="misc_not_sent">не отправлено — нет статуса игры или канал занят</string>
+
+    <!-- Settings Page -->
+    <string name="prefs_channel_params">Канал и параметры приложения</string>
+    <string name="prefs_require_game">Требовать статус игры</string>
+    <string name="prefs_daemon">Авто-исполнение (демон)</string>
+    <string name="prefs_timeout">Таймаут, сек</string>
+    <string name="prefs_first_run">Первичная настройка</string>
+    <string name="prefs_about">GC Tune 1.0 · канал Game Cube</string>
+    <string name="prefs_language">Язык</string>
+    <string name="prefs_language_sub">Выбор языка приложения</string>
+    <string name="prefs_system_language_btn">Системные настройки языка</string>
+    <string name="lang_default">Системный по умолчанию</string>
+    <string name="lang_en">English</string>
+    <string name="lang_ru">Русский</string>
+    <string name="lang_zh">简体中文</string>
+
+    <!-- Setup / Onboarding -->
+    <string name="setup_guide_path">Ультраигровой режим → Поддерживаемые игры → Другое → GC Tune</string>
+    <string name="setup_open_app">Открыть GC Tune</string>
+    <string name="setup_open_settings_failed">Не удалось открыть настройки игры</string>
+
+    <!-- Services / Notifications -->
+    <string name="keepalive_notif_text">Защита фона активна</string>
+    <string name="channel_notif_running">Команда выполняется, ждём ответ канала…</string>
+
+    <!-- ADB Examples Monospace Block -->
+    <string name="adb_examples" formatted="false"># команда через канал uid1000
+adb shell content call --uri content://com.poc.gctune.bridge --method exec --arg "id" --extra wait:i:8
+
+# результат: ack|STATUS|rc|base64
+adb shell settings get secure gc_tune_adb_out
+
+# или скрипт из репозитория
+./adbplus.ps1 "id"</string>
+
+    <!-- Material 3 Shape Names Array -->
+    <string-array name="shape_names">
+        <item>Круг (Circle)</item>
+        <item>Квадрат (Square)</item>
+        <item>Скошенный (Slanted Square)</item>
+        <item>Арка (Arch)</item>
+        <item>Веер (Fan)</item>
+        <item>Стрелка (Arrow)</item>
+        <item>Полукруг (Semi-Circle)</item>
+        <item>Овал (Oval)</item>
+        <item>Капсула (Pill)</item>
+        <item>Треугольник (Triangle)</item>
+        <item>Ромб (Diamond)</item>
+        <item>Ракушка (Clam Shell)</item>
+        <item>Пятигранник (Pentagon)</item>
+        <item>Кристалл (Gem)</item>
+        <item>Солнце (Sunny)</item>
+        <item>Яркое солнце (Very Sunny)</item>
+        <item>Печенье 4 (Cookie 4)</item>
+        <item>Печенье 6 (Cookie 6)</item>
+        <item>Печенье 7 (Cookie 7)</item>
+        <item>Печенье 9 (Cookie 9)</item>
+        <item>Печенье 12 (Cookie 12)</item>
+        <item>Привидение (Ghostish)</item>
+        <item>Клевер 4 (Clover 4)</item>
+        <item>Клевер 8 (Clover 8)</item>
+        <item>Вспышка (Burst)</item>
+        <item>Мягкая вспышка (Soft Burst)</item>
+        <item>Взрыв (Boom)</item>
+        <item>Мягкий взрыв (Soft Boom)</item>
+        <item>Цветок (Flower)</item>
+        <item>Облачко (Puffy)</item>
+        <item>Пышный ромб (Puffy Diamond)</item>
+        <item>Пиксельный круг (Pixel Circle)</item>
+        <item>Пиксельный треугольник (Pixel Triangle)</item>
+        <item>Булочка (Bun)</item>
+        <item>Сердце (Heart)</item>
+    </string-array>
+    <string name="bridge_disabled">мост выключен — включите «Команды по ADB» на странице «Прочее»</string>
+</resources>

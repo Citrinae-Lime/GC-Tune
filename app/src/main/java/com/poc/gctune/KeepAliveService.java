@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
+import android.os.PowerManager;
 
 /**
  * Background survival service for the "Неубиваемый фон" toggle.
@@ -26,8 +27,16 @@ import android.util.Log;
  * force-stop by the user still disables everything until the next manual
  * launch - that is an Android invariant no app can bypass.
  */
-import android.os.PowerManager;
 
+/*
+ * =========================================================================================
+ * I18N MODIFICATION NOTE:
+ * The hardcoded notification strings ("GC Tune" and "Защита фона активна") have been
+ * extracted to R.string.app_name and R.string.keepalive_notif_text for multi-language
+ * support. All original author comments, WakeLock handling, and lifecycle behaviors are
+ * preserved intact.
+ * =========================================================================================
+ */
 public class KeepAliveService extends Service {
 
     private static final String TAG = "GCTune";
@@ -100,7 +109,7 @@ public class KeepAliveService extends Service {
         try {
             NotificationManager nm = getSystemService(NotificationManager.class);
             if (nm != null && nm.getNotificationChannel(CH) == null) {
-                NotificationChannel ch = new NotificationChannel(CH, "GC Tune",
+                NotificationChannel ch = new NotificationChannel(CH, getString(R.string.app_name),
                         NotificationManager.IMPORTANCE_LOW);
                 ch.setShowBadge(false);
                 ch.setSound(null, null);
@@ -108,8 +117,8 @@ public class KeepAliveService extends Service {
             }
             Notification n = new Notification.Builder(this, CH)
                     .setSmallIcon(android.R.drawable.ic_lock_idle_low_battery)
-                    .setContentTitle("GC Tune")
-                    .setContentText("Защита фона активна")
+                    .setContentTitle(getString(R.string.app_name))
+                    .setContentText(getString(R.string.keepalive_notif_text))
                     .setWhen(System.currentTimeMillis())
                     .setOngoing(true)
                     .build();
@@ -131,6 +140,7 @@ public class KeepAliveService extends Service {
     @Override
     public void onDestroy() {
         releaseWakeLock();
+        // system-initiated death: keep-alive alarm chain still re-raises us
         super.onDestroy();
     }
 

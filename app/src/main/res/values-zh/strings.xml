@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GC Tune</string>
+
+    <!-- General / Common -->
+    <string name="cancel">取消</string>
+    <string name="close">关闭</string>
+    <string name="copied">已复制到剪贴板</string>
+    <string name="copy_failed">复制失败</string>
+    <string name="search">搜索</string>
+    <string name="nothing_found">未找到任何内容</string>
+    <string name="file_not_selected">未选择文件</string>
+    <string name="file_preparing">文件准备中，请稍候</string>
+    <string name="reading_file">正在读取文件…</string>
+    <string name="preparing">准备中…</string>
+    <string name="file_ready_md5">文件就绪，MD5 %1$s — 可以开始安装</string>
+    <string name="prep_error">准备失败：%1$s</string>
+    <string name="explorer_unavailable">无法打开文件管理器</string>
+    <string name="wait_current_cmd">请等待当前命令执行完毕</string>
+    <string name="not_in_game_list_toast">请添加 GC Tune：游戏魔盒 → 支持的游戏 → 其他应用</string>
+    <string name="not_in_game_list_err">GC Tune 不在游戏魔盒列表中 — 请添加后重试</string>
+    <string name="no_resp_uid1000">未收到 uid 1000 响应 — 请划出游戏魔盒侧边栏后重试</string>
+    <string name="no_resp_uid1000_short">未收到 uid 1000 响应\n</string>
+    <string name="cmd_sent_open_game">命令已发送 — 请划出游戏魔盒侧边栏…</string>
+    <string name="status_running">…正在执行\n</string>
+    <string name="status_running_single">正在执行…</string>
+    <string name="status_canceled">已取消</string>
+    <string name="open_game_mode">打开游戏魔盒</string>
+    <string name="status_game_cube_running">只要划出游戏魔盒侧边栏，命令就会自动执行 — FpsManager 会自动拉起。</string>
+    <string name="status_in_game_list">GC Tune 已在游戏列表中</string>
+    <string name="status_not_in_game_list">未在游戏列表中</string>
+    <string name="details_in_console">详情请查看控制台输出（Shell 标签页）</string>
+    <string name="no_write_secure_toast">命令无法向守护进程发布：缺少 WRITE_SECURE_SETTINGS 权限</string>
+    <string name="no_write_secure_log">缺少 WRITE_SECURE_SETTINGS 权限 — 请执行：adb shell pm grant com.poc.gctune android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="game_cube_supported_games">支持的游戏</string>
+
+    <!-- Navigation -->
+    <string name="nav_shell">Shell</string>
+    <string name="nav_custom">个性化</string>
+    <string name="nav_settings">设置</string>
+    <string name="nav_theme">主题</string>
+    <string name="nav_icons">图标</string>
+    <string name="nav_settings_theme">系统设置着色</string>
+    <string name="nav_fonts">字体</string>
+    <string name="nav_misc">其他</string>
+
+    <!-- Shell Page -->
+    <string name="shell_cmd_hint">命令或脚本</string>
+    <string name="shell_console">控制台</string>
+    <string name="shell_console_empty">控制台为空</string>
+    <string name="shell_paste">粘贴</string>
+    <string name="shell_pasted">已从剪贴板粘贴</string>
+    <string name="shell_enter_cmd">请输入命令</string>
+    <string name="shell_empty_cmd">命令为空</string>
+    <string name="shell_file_filter">脚本文件 (.sh / .txt)</string>
+    <string name="shell_imported_lines">已导入行数：%d</string>
+    <string name="shell_import_error">导入失败：%1$s</string>
+    <string name="shell_decode_error">解码失败：%1$s</string>
+    <string name="shell_no_output">（命令已执行，无控制台输出）</string>
+
+    <!-- Theme Page -->
+    <string name="theme_title">主题</string>
+    <string name="theme_subtitle">安装与应用 .itz 主题</string>
+    <string name="theme_file_label">主题文件 (.itz)</string>
+    <string name="theme_pick_btn">选择 .itz</string>
+    <string name="theme_install_btn">安装并打开 iTheme</string>
+    <string name="theme_hint">选择 .itz 文件后点击「安装」</string>
+    <string name="theme_copy_info">文件副本保存在 Download/gctune。需打开游戏魔盒侧边栏方可应用。</string>
+    <string name="theme_pick_first">请先选择 .itz 主题文件</string>
+    <string name="theme_id_replaced">已替换 ID 数量：%d</string>
+    <string name="theme_desc_no_id">description.xml 中无 ID — 文件未做改动</string>
+    <string name="theme_id_not_replaced">ID 未替换：%1$s</string>
+    <string name="theme_src_unreadable">uid 1000 无法读取源文件</string>
+    <string name="theme_src_stale">源文件与所选文件不一致 — 请重新选择</string>
+    <string name="theme_no_itz">目录 .../theme/.dwd/.../T 中未找到任何 .itz 文件</string>
+    <string name="theme_no_itheme_pkg">无法识别 iTheme 软件包 — 详情见控制台</string>
+    <string name="theme_write_fail">写入失败 — 详情见控制台（Shell 标签页）</string>
+    <string name="theme_write_fail_file">写入 %1$s 失败</string>
+    <string name="theme_replaced_stats">已替换文件：%1$d%2$s</string>
+    <string name="theme_error_suffix">，错误：%d</string>
+    <string name="theme_itheme_opened">，iTheme 已打开 — 请在主题商店中应用主题</string>
+    <string name="theme_itheme_not_opened"> — 无法打开 iTheme，详情见控制台</string>
+
+    <!-- Icons Page -->
+    <string name="icons_title">图标</string>
+    <string name="icons_subtitle">图标重新着色与样式定制</string>
+    <string name="icons_preview">效果预览</string>
+    <string name="icons_source">图标来源</string>
+    <string name="icons_source_system">系统默认图标</string>
+    <string name="icons_source_pack_btn">图标包</string>
+    <string name="icons_source_system_status">来源：系统默认图标</string>
+    <string name="icons_color_title">着色颜色</string>
+    <string name="icons_monet">Monet（壁纸动态取色）</string>
+    <string name="icons_monet_sub">自动从当前壁纸提取主题配色</string>
+    <string name="icons_monet_applied">已从壁纸提取配色 (Monet)</string>
+    <string name="icons_fine_tune">细节微调</string>
+    <string name="icons_desat">去色度 (Desaturation)</string>
+    <string name="icons_lighten">亮度 (Brightness)</string>
+    <string name="icons_strength">着色强度 (Strength)</string>
+    <string name="icons_scale">图标大小 (Scale)</string>
+    <string name="icons_reset_btn">重置设置</string>
+    <string name="icons_reset_toast">设置已重置</string>
+    <string name="icons_style_layer">样式：背景底板 + 图标</string>
+    <string name="icons_separate_layers">分层处理（类似 IconPack Studio）</string>
+    <string name="icons_bg_color">背景底板颜色：</string>
+    <string name="icons_shape">图标形状</string>
+    <string name="icons_shape_sub">35 种官方 Material 3 形状 · 点击选择</string>
+    <string name="icons_shape_dialog_title">选择图标形状 (Material 3 Expressive)</string>
+    <string name="icons_apply_btn">重新着色并应用</string>
+    <string name="icons_hint">选择颜色后点击「重新着色」</string>
+    <string name="icons_pack_info">支持导入 ADW/Nova 图标包。需打开游戏魔盒侧边栏方可应用。</string>
+    <string name="icons_searching_packs">正在扫描图标包…</string>
+    <string name="icons_no_packs_found">未找到第三方图标包 — 请从应用商店安装图标包</string>
+    <string name="icons_system_without_pack">系统默认图标（不使用图标包）</string>
+    <string name="icons_dialog_title">选择图标包</string>
+    <string name="icons_loading_pack">正在加载「%1$s」…</string>
+    <string name="icons_pack_loaded">图标包已加载：%d 个图标映射</string>
+    <string name="icons_pack_unsupported">不支持此图标包（缺少 appfilter.xml）</string>
+    <string name="icons_no_apps_list">无法获取已安装应用列表</string>
+    <string name="icons_recoloring">正在重绘着色图标…</string>
+    <string name="icons_rendering_progress">已渲染 %1$d/%2$d%3$s — 正在通过特权通道应用…</string>
+    <string name="icons_rendering_err_suffix">（错误：%d）</string>
+    <string name="icons_no_icons_err">未找到已着色图标 — 请重试</string>
+    <string name="icons_busy_err">上一次安装仍在进行中 — 请稍候再试</string>
+    <string name="icons_applied">图标已成功应用%1$s — 请返回桌面查看效果%2$s</string>
+    <string name="icons_applied_count_suffix">（%d 个图标）</string>
+    <string name="icons_style_fail_suffix">（未切换图标样式：缺少 WRITE_SECURE_SETTINGS 权限）</string>
+
+    <!-- Customization Hub -->
+    <string name="custom_hub_title">个性化中心</string>
+    <string name="custom_hub_subtitle">主题、图标与配色</string>
+    <string name="custom_block_theme_sub">安装 .itz</string>
+    <string name="custom_block_settings_sub">系统设置与 Monet 配色</string>
+    <string name="custom_block_icons_sub">图标重着色与第三方图标包</string>
+    <string name="custom_block_fonts_sub">自定义系统字体</string>
+    <string name="custom_block_misc_sub">后台保活与 ADB 桥接</string>
+
+    <!-- Settings Theme Page -->
+    <string name="st_title">系统设置着色</string>
+    <string name="st_subtitle">统一系统设置强调色与控件色彩</string>
+    <string name="st_preview">设置界面配色预览</string>
+    <string name="st_preview_sub">系统设置中开关、按钮与滑块的高亮强调色</string>
+    <string name="st_color_mode">配色模式</string>
+    <string name="st_monet">Monet（壁纸动态取色）</string>
+    <string name="st_monet_sub">自动从当前壁纸提取主强调色</string>
+    <string name="st_monet_applied">强调色已从壁纸提取 (Monet)</string>
+    <string name="st_apply_btn">应用设置配色</string>
+    <string name="st_hint">选择配色模式后点击「应用设置配色」</string>
+    <string name="st_desc">通过 Fabricated Overlay 与 OriginOS 主题机制生成系统级着色。需打开游戏魔盒侧边栏。</string>
+    <string name="st_applying">正在将强调色应用到系统设置…</string>
+    <string name="st_success">系统设置着色应用成功！设置应用已重启生效。</string>
+    <string name="st_recolored_toast">系统设置着色已完成！</string>
+    <string name="st_check_settings">命令已执行 — 请打开系统设置查看效果</string>
+
+    <!-- Fonts Page -->
+    <string name="font_title">系统字体</string>
+    <string name="font_subtitle">替换 /data/vfonts 中的 TTF 字体</string>
+    <string name="font_file_label">字体文件 (.ttf)</string>
+    <string name="font_pick_btn">选择 .ttf</string>
+    <string name="font_install_btn">安装并打开 iTheme</string>
+    <string name="font_hint">选择 .ttf 字体文件后点击「安装」</string>
+    <string name="font_copy_info">副本保存在 Download/gctune。替换前会自动生成 .bak 备份。</string>
+    <string name="font_pick_first">请先选择 .ttf 字体文件</string>
+    <string name="font_no_fonts_found">/data/vfonts/ 中未找到字体文件。请先在 iTheme 主题商店中下载任意免费字体后重试。</string>
+    <string name="font_missing_ttf">安装过程中 TTF 字体文件丢失。请重新搜索。详情见 Shell 标签页。</string>
+    <string name="font_success">，iTheme 已打开 — 请应用字体并重启手机</string>
+
+    <!-- Misc Page -->
+    <string name="misc_title">其他功能</string>
+    <string name="misc_subtitle">后台持久化与 ADB 调试桥</string>
+    <string name="misc_protection_title">应用后台防清理保护</string>
+    <string name="misc_protection_desc">加入 Doze 省电白名单 (cmd deviceidle whitelist) 并解除一切后台运行限制。</string>
+    <string name="misc_target">目标应用：%1$s</string>
+    <string name="misc_target_hint">点击下方「选择应用」更换目标</string>
+    <string name="misc_app_list_btn">选择应用</string>
+    <string name="misc_freeze_btn">冻结应用</string>
+    <string name="misc_keepalive_title">自身后台常驻服务</string>
+    <string name="misc_keepalive_desc">前台常驻通知与看门狗闹钟，防止 GC Tune 被系统清理</string>
+    <string name="misc_adb_title">ADB 远程调试桥</string>
+    <string name="misc_adb_sub">允许通过 ADB 发送提权命令</string>
+    <string name="misc_adb_sub_desc">仅限 adb shell 与 root (uid 2000 / 0)</string>
+    <string name="misc_copy_cmds_btn">复制 ADB 调用命令</string>
+    <string name="misc_copy_cmds_toast">命令已复制到剪贴板</string>
+    <string name="misc_adb_warn">仅在需要调试使用时开启。</string>
+    <string name="misc_app_picker_title">选择应用</string>
+    <string name="misc_adding_doze">正在加入 Doze 白名单…</string>
+    <string name="misc_removing_doze">正在移出 Doze 白名单…</string>
+    <string name="misc_freezing">正在冻结 %1$s…</string>
+    <string name="misc_unfreezing">正在解冻应用…</string>
+    <string name="misc_no_resp_game_mode">无响应 — 请划出游戏魔盒侧边栏</string>
+    <string name="misc_frozen">已冻结%1$s</string>
+    <string name="misc_disabled_suffix"> (已禁用)</string>
+    <string name="misc_bg_restricted">后台受限，无法完全挂起</string>
+    <string name="misc_unfrozen">已解冻</string>
+    <string name="misc_partial_console">部分成功 — 详情见控制台</string>
+    <string name="misc_protection_removed">保护已解除（已从白名单移出）</string>
+    <string name="misc_not_in_whitelist">不在白名单中 — 详情见控制台</string>
+    <string name="misc_protected_status">已保护：Doze 白名单 + 允许后台运行</string>
+    <string name="misc_service_active">服务运行中</string>
+    <string name="misc_service_off">已关闭</string>
+    <string name="misc_bridge_on">已开启</string>
+    <string name="misc_bridge_off">已关闭</string>
+    <string name="misc_not_sent">未发送 — 缺少游戏状态或通道正忙</string>
+
+    <!-- Settings Page -->
+    <string name="prefs_channel_params">通道与应用运行参数</string>
+    <string name="prefs_require_game">强制要求处于游戏状态</string>
+    <string name="prefs_daemon">后台守护进程自动执行</string>
+    <string name="prefs_timeout">命令超时时间（秒）</string>
+    <string name="prefs_first_run">首次使用设置向导</string>
+    <string name="prefs_about">GC Tune 1.0 · Game Cube 游戏魔盒通道</string>
+    <string name="prefs_language">显示语言</string>
+    <string name="prefs_language_sub">选择应用语言（支持安卓 14+）</string>
+    <string name="prefs_system_language_btn">打开系统应用语言设置</string>
+    <string name="lang_default">跟随系统</string>
+    <string name="lang_en">English (英语)</string>
+    <string name="lang_ru">Русский (俄语)</string>
+    <string name="lang_zh">简体中文</string>
+
+    <!-- Setup / Onboarding -->
+    <string name="setup_guide_path">游戏魔盒 → 支持的游戏 → 其他应用 → 添加 GC Tune</string>
+    <string name="setup_open_app">进入 GC Tune</string>
+    <string name="setup_open_settings_failed">无法打开游戏设置</string>
+
+    <!-- Services / Notifications -->
+    <string name="keepalive_notif_text">后台防清理保护已激活</string>
+    <string name="channel_notif_running">命令正在执行中，等待特权通道响应…</string>
+
+    <!-- ADB Examples Monospace Block -->
+    <string name="adb_examples" formatted="false"># 通过 uid 1000 特权通道发送命令
+adb shell content call --uri content://com.poc.gctune.bridge --method exec --arg "id" --extra wait:i:8
+
+# 查询执行结果: ack|STATUS|rc|base64
+adb shell settings get secure gc_tune_adb_out
+
+# 或使用仓库附带的 PowerShell 脚本
+./adbplus.ps1 "id"</string>
+
+    <!-- Material 3 Shape Names Array -->
+    <string-array name="shape_names">
+        <item>圆形 (Circle)</item>
+        <item>正方形 (Square)</item>
+        <item>倾斜方块 (Slanted Square)</item>
+        <item>拱门 (Arch)</item>
+        <item>扇形 (Fan)</item>
+        <item>箭头 (Arrow)</item>
+        <item>半圆 (Semi-Circle)</item>
+        <item>椭圆 (Oval)</item>
+        <item>胶囊 (Pill)</item>
+        <item>三角形 (Triangle)</item>
+        <item>菱形 (Diamond)</item>
+        <item>贝壳 (Clam Shell)</item>
+        <item>五边形 (Pentagon)</item>
+        <item>宝石 (Gem)</item>
+        <item>太阳 (Sunny)</item>
+        <item>耀阳 (Very Sunny)</item>
+        <item>曲奇 4 (Cookie 4)</item>
+        <item>曲奇 6 (Cookie 6)</item>
+        <item>曲奇 7 (Cookie 7)</item>
+        <item>曲奇 9 (Cookie 9)</item>
+        <item>曲奇 12 (Cookie 12)</item>
+        <item>幽灵 (Ghostish)</item>
+        <item>四叶草 (Clover 4)</item>
+        <item>八叶草 (Clover 8)</item>
+        <item>迸发 (Burst)</item>
+        <item>柔和迸发 (Soft Burst)</item>
+        <item>爆炸 (Boom)</item>
+        <item>柔和爆炸 (Soft Boom)</item>
+        <item>花朵 (Flower)</item>
+        <item>泡泡 (Puffy)</item>
+        <item>丰满菱形 (Puffy Diamond)</item>
+        <item>像素圆 (Pixel Circle)</item>
+        <item>像素三角 (Pixel Triangle)</item>
+        <item>小面包 (Bun)</item>
+        <item>爱心 (Heart)</item>
+    </string-array>
+    <string name="bridge_disabled">ADB 桥接已关闭 — 请在「其他」页面开启「允许通过 ADB 发送提权命令」</string>
+</resources>
