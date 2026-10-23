@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GC Tune</string>
 
@@ -216,6 +216,7 @@
     <string name="lang_en">English</string>
     <string name="lang_ru">Русский</string>
     <string name="lang_zh">简体中文</string>
+    <string name="lang_vi">Tiếng Việt</string>
 
     <!-- Setup / Onboarding -->
     <string name="setup_guide_path">Ультраигровой режим → Поддерживаемые игры → Другое → GC Tune</string>

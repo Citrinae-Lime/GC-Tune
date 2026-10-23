@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Vietnamese (Tiếng Việt) Localization - Merged from gctune-vi.patch -->
+<resources>
+    <string name="app_name">GC Tune</string>
+
+    <!-- Main Navigation Tabs -->
+    <string name="cancel">Hủy</string>
+    <string name="close">Đóng</string>
+    <string name="copied">Đã sao chép output</string>
+    <string name="copy_failed">Không sao chép được</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="nothing_found">Không tìm thấy gì</string>
+    <string name="file_not_selected">chưa chọn file</string>
+    <string name="file_preparing">File đang được chuẩn bị — hãy đợi</string>
+    <string name="reading_file">Đang đọc file…</string>
+    <string name="preparing">đang chuẩn bị…</string>
+    <string name="file_ready_md5">File đã sẵn sàng, md5 %1$s — có thể cài đặt</string>
+    <string name="prep_error">Lỗi chuẩn bị: %1$s</string>
+    <string name="explorer_unavailable">Trình quản lý file không khả dụng</string>
+    <string name="wait_current_cmd">Hãy đợi lệnh hiện tại xong</string>
+    <string name="not_in_game_list_toast">Thêm GC Tune: Ultra Game Mode → Danh sách game được hỗ trợ → Khác</string>
+    <string name="not_in_game_list_err">GC Tune chưa có trong danh sách game — hãy thêm ứng dụng rồi thử lại</string>
+    <string name="no_resp_uid1000">Không có phản hồi từ uid 1000 — hãy mở chế độ game rồi thử lại</string>
+    <string name="no_resp_uid1000_short">không có phản hồi từ uid 1000\n</string>
+    <string name="cmd_sent_open_game">Đã gửi lệnh — hãy mở chế độ game…</string>
+    <string name="status_running">…đang chạy\n</string>
+    <string name="status_running_single">đang chạy…</string>
+    <string name="status_canceled">Đã hủy</string>
+    <string name="open_game_mode">Hãy mở chế độ game</string>
+    <string name="status_game_cube_running">Lệnh sẽ tự chạy ngay khi bạn mở thanh Game Cube — FpsManager sẽ tự chạy lệnh đó.</string>
+    <string name="status_in_game_list">GC Tune đã có trong danh sách game</string>
+    <string name="status_not_in_game_list">chưa có trong danh sách game</string>
+    <string name="details_in_console">Chi tiết xem ở console (tab Shell)</string>
+    <string name="no_write_secure_toast">Lệnh chưa được gửi cho daemon: thiếu quyền WRITE_SECURE_SETTINGS</string>
+    <string name="no_write_secure_log">thiếu quyền WRITE_SECURE_SETTINGS — hãy chạy: adb shell pm grant com.poc.gctune android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="game_cube_supported_games">Danh sách game được hỗ trợ</string>
+    <string name="nav_shell">Shell</string>
+    <string name="nav_custom">Tùy biến</string>
+    <string name="nav_settings">Cài đặt</string>
+    <string name="nav_theme">Chủ đề</string>
+    <string name="nav_icons">Biểu tượng</string>
+    <string name="nav_settings_theme">Cài đặt hệ thống</string>
+    <string name="nav_fonts">Font chữ</string>
+    <string name="nav_misc">Khác</string>
+    <string name="shell_cmd_hint">Lệnh hoặc script</string>
+    <string name="shell_console">Console</string>
+    <string name="shell_console_empty">Console trống</string>
+    <string name="shell_paste">Dán</string>
+    <string name="shell_pasted">Đã dán từ clipboard</string>
+    <string name="shell_enter_cmd">Nhập lệnh</string>
+    <string name="shell_empty_cmd">Lệnh trống</string>
+    <string name="shell_file_filter">File script (.sh / .txt)</string>
+    <string name="shell_imported_lines">Đã nhập: %d dòng</string>
+    <string name="shell_import_error">Lỗi nhập file: %1$s</string>
+    <string name="shell_decode_error">Lỗi giải mã: %1$s</string>
+    <string name="shell_no_output">(lệnh đã chạy, không có output)</string>
+    <string name="theme_title">Chủ đề</string>
+    <string name="theme_subtitle">Cài và áp dụng file .itz</string>
+    <string name="theme_file_label">File theme (.itz)</string>
+    <string name="theme_pick_btn">Chọn file .itz</string>
+    <string name="theme_install_btn">Cài đặt và mở iTheme</string>
+    <string name="theme_hint">Chọn file .itz rồi nhấn «Cài đặt»</string>
+    <string name="theme_copy_info">Bản sao file nằm ở Download/gctune. Áp dụng khi đang mở chế độ game.</string>
+    <string name="theme_pick_first">Hãy chọn file .itz trước</string>
+    <string name="theme_id_replaced">id đã được thay: %d</string>
+    <string name="theme_desc_no_id">description.xml không có id — file giữ nguyên</string>
+    <string name="theme_id_not_replaced">id KHÔNG được thay: %1$s</string>
+    <string name="theme_src_unreadable">uid 1000 không đọc được file nguồn</string>
+    <string name="theme_src_stale">Nguồn không khớp với file đã chọn — hãy chọn lại</string>
+    <string name="theme_no_itz">Không có file .itz nào trong thư mục .../theme/.dwd/.../T</string>
+    <string name="theme_no_itheme_pkg">Không xác định được gói iTheme — chi tiết xem ở console</string>
+    <string name="theme_write_fail">Ghi thất bại — xem output ở console (tab Shell)</string>
+    <string name="theme_write_fail_file">không ghi được %1$s</string>
+    <string name="theme_replaced_stats">Số file đã thay: %1$d%2$s</string>
+    <string name="theme_error_suffix">, lỗi: %d</string>
+    <string name="theme_itheme_opened">, iTheme đã mở — áp dụng theme</string>
+    <string name="theme_itheme_not_opened">iTheme không mở được, output xem ở console</string>
+    <string name="icons_title">Biểu tượng</string>
+    <string name="icons_subtitle">Đổi màu và tạo kiểu icon</string>
+    <string name="icons_preview">Xem trước</string>
+    <string name="icons_source">Nguồn icon</string>
+    <string name="icons_source_system">Icon hệ thống</string>
+    <string name="icons_source_pack_btn">Gói</string>
+    <string name="icons_source_system_status">Nguồn: icon hệ thống</string>
+    <string name="icons_color_title">Màu đổi</string>
+    <string name="icons_monet">Monet (Màu từ hình nền)</string>
+    <string name="icons_monet_sub">Tự động lấy màu chủ đề từ hình nền</string>
+    <string name="icons_monet_applied">Đã lấy màu từ hình nền (Monet)</string>
+    <string name="icons_fine_tune">Tinh chỉnh</string>
+    <string name="icons_desat">Khử màu</string>
+    <string name="icons_lighten">Làm sáng</string>
+    <string name="icons_strength">Mức đổi màu</string>
+    <string name="icons_scale">Kích thước icon</string>
+    <string name="icons_reset_btn">Đặt lại cài đặt</string>
+    <string name="icons_reset_toast">Đã đặt lại cài đặt</string>
+    <string name="icons_style_layer">Kiểu: nền + icon</string>
+    <string name="icons_separate_layers">Tách thành lớp (như IconPack Studio)</string>
+    <string name="icons_bg_color">Màu nền:</string>
+    <string name="icons_shape">Hình dáng icon</string>
+    <string name="icons_shape_sub">35 hình dạng Material 3 chính thức · Nhấn để chọn</string>
+    <string name="icons_shape_dialog_title">Chọn hình dáng (Material 3 Expressive)</string>
+    <string name="icons_apply_btn">Đổi màu và áp dụng</string>
+    <string name="icons_hint">Chọn màu rồi nhấn «Đổi màu»</string>
+    <string name="icons_pack_info">Hỗ trợ nhập gói ADW/Nova. Áp dụng khi đang mở chế độ game.</string>
+    <string name="icons_searching_packs">Đang tìm gói icon…</string>
+    <string name="icons_no_packs_found">Không tìm thấy gói icon — hãy cài một gói bất kỳ từ Play Store</string>
+    <string name="icons_system_without_pack">Icon hệ thống (không dùng gói)</string>
+    <string name="icons_dialog_title">Gói icon</string>
+    <string name="icons_loading_pack">Đang tải «%1$s»…</string>
+    <string name="icons_pack_loaded">Đã tải gói: %d icon trong bảng ánh xạ</string>
+    <string name="icons_pack_unsupported">Gói không được hỗ trợ (thiếu appfilter.xml)</string>
+    <string name="icons_no_apps_list">Không lấy được danh sách ứng dụng</string>
+    <string name="icons_recoloring">Đang đổi màu icon…</string>
+    <string name="icons_rendering_progress">Đang vẽ %1$d trên %2$d%3$s — áp dụng qua kênh…</string>
+    <string name="icons_rendering_err_suffix"> (lỗi: %d)</string>
+    <string name="icons_no_icons_err">Chưa có icon nào được đổi màu — hãy thử lại</string>
+    <string name="icons_busy_err">Lần cài trước vẫn đang chạy — hãy đợi rồi thử lại</string>
+    <string name="icons_applied">Đã áp dụng biểu tượng%1$s — kiểm tra launcher%2$s</string>
+    <string name="icons_applied_count_suffix"> (%d icon)</string>
+    <string name="icons_style_fail_suffix"> (chưa đổi kiểu: thiếu quyền WRITE_SECURE_SETTINGS)</string>
+    <string name="custom_hub_title">Tùy biến</string>
+    <string name="custom_hub_subtitle">Chủ đề, icon và nền</string>
+    <string name="custom_block_theme_sub">Cài file .itz</string>
+    <string name="custom_block_settings_sub">Đổi màu điểm nhấn &amp; Monet</string>
+    <string name="custom_block_icons_sub">Đổi màu và gói icon</string>
+    <string name="custom_block_fonts_sub">Font hệ thống</string>
+    <string name="custom_block_misc_sub">Bảo vệ chạy nền và cầu ADB</string>
+    <string name="st_title">Giao diện Cài đặt</string>
+    <string name="st_subtitle">Đổi màu điểm nhấn &amp; công tắc</string>
+    <string name="st_preview">Xem trước màu Cài đặt</string>
+    <string name="st_preview_sub">Màu điểm nhấn cho công tắc &amp; thanh trượt trong Cài đặt</string>
+    <string name="st_color_mode">Chế độ màu</string>
+    <string name="st_monet">Monet (Màu từ hình nền)</string>
+    <string name="st_monet_sub">Tự động lấy màu điểm nhấn từ hình nền</string>
+    <string name="st_monet_applied">Đã lấy màu từ hình nền (Monet)</string>
+    <string name="st_apply_btn">Áp dụng cho Cài đặt</string>
+    <string name="st_hint">Chọn chế độ màu rồi nhấn «Áp dụng cho Cài đặt»</string>
+    <string name="st_desc">Tạo màu điểm nhấn hệ thống qua Fabricated Overlay trên OriginOS. Cần Game Cube.</string>
+    <string name="st_applying">Đang áp dụng màu cho Cài đặt hệ thống…</string>
+    <string name="st_success">Đã áp dụng màu cho Cài đặt! Đã khởi động lại Cài đặt.</string>
+    <string name="st_recolored_toast">Đã đổi màu Cài đặt!</string>
+    <string name="st_check_settings">Lệnh đã chạy — hãy kiểm tra Cài đặt hệ thống</string>
+    <string name="font_title">Font chữ</string>
+    <string name="font_subtitle">Thay TTF trong /data/vfonts</string>
+    <string name="font_file_label">File font (.ttf)</string>
+    <string name="font_pick_btn">Chọn file .ttf</string>
+    <string name="font_install_btn">Cài đặt và mở iTheme</string>
+    <string name="font_hint">Chọn file .ttf rồi nhấn «Cài đặt»</string>
+    <string name="font_copy_info">Bản sao nằm ở Download/gctune. Trước khi thay sẽ tạo backup .bak.</string>
+    <string name="font_pick_first">Hãy chọn file .ttf trước</string>
+    <string name="font_no_fonts_found">Không có file TTF nào trong /data/vfonts/. Hãy tải font trong iTheme rồi thử lại.</string>
+    <string name="font_missing_ttf">File TTF đã biến mất trong lúc cài. Hãy tìm lại. Xem chi tiết ở tab Shell.</string>
+    <string name="font_success">, iTheme đã mở — áp dụng font rồi khởi động lại — áp dụng theme</string>
+    <string name="misc_title">Khác</string>
+    <string name="misc_subtitle">Chống bị tắt nền và cầu ADB</string>
+    <string name="misc_protection_title">Chống ứng dụng bị dọn khỏi bộ nhớ</string>
+    <string name="misc_protection_desc">Thêm vào whitelist pin Doze (cmd deviceidle whitelist) + cho phép chạy nền không giới hạn.</string>
+    <string name="misc_target">Mục tiêu: %1$s</string>
+    <string name="misc_target_hint">Nhấn «Chọn từ danh sách» để đổi</string>
+    <string name="misc_app_list_btn">Danh sách ứng dụng</string>
+    <string name="misc_freeze_btn">Đóng băng</string>
+    <string name="misc_keepalive_title">Dịch vụ nền riêng</string>
+    <string name="misc_keepalive_desc">Dịch vụ nền thường trực + bộ hẹn giờ giám sát</string>
+    <string name="misc_adb_title">Cầu ADB</string>
+    <string name="misc_adb_sub">Lệnh qua ADB</string>
+    <string name="misc_adb_sub_desc">Chỉ dành cho adb shell và root</string>
+    <string name="misc_copy_cmds_btn">Sao chép lệnh</string>
+    <string name="misc_copy_cmds_toast">Đã sao chép lệnh</string>
+    <string name="misc_adb_warn">Chỉ bật khi đang dùng.</string>
+    <string name="misc_app_picker_title">Ứng dụng</string>
+    <string name="misc_adding_doze">đang thêm vào whitelist Doze…</string>
+    <string name="misc_removing_doze">đang xóa khỏi whitelist Doze…</string>
+    <string name="misc_freezing">Đang đóng băng %1$s…</string>
+    <string name="misc_unfreezing">đang bỏ đóng băng…</string>
+    <string name="misc_no_resp_game_mode">Không có phản hồi — hãy mở chế độ game</string>
+    <string name="misc_frozen">Đã đóng băng%1$s</string>
+    <string name="misc_disabled_suffix"> (đã tắt)</string>
+    <string name="misc_bg_restricted">Nền bị hạn chế, không dùng được suspend</string>
+    <string name="misc_unfrozen">Đã bỏ đóng băng</string>
+    <string name="misc_partial_console">Một phần — xem output ở console</string>
+    <string name="misc_protection_removed">Đã gỡ bảo vệ (xóa khỏi whitelist)</string>
+    <string name="misc_not_in_whitelist">Không có trong whitelist — kiểm tra console</string>
+    <string name="misc_protected_status">Đã bảo vệ: có trong whitelist Doze + được phép chạy nền</string>
+    <string name="misc_service_active">dịch vụ đang chạy</string>
+    <string name="misc_service_off">tắt</string>
+    <string name="misc_bridge_on">đang bật</string>
+    <string name="misc_bridge_off">đã tắt</string>
+    <string name="misc_not_sent">chưa gửi — game chưa có trạng thái hoặc kênh đang bận</string>
+    <string name="prefs_channel_params">Kênh và thiết lập ứng dụng</string>
+    <string name="prefs_require_game">Yêu cầu trạng thái game</string>
+    <string name="prefs_daemon">Tự động thực thi (daemon)</string>
+    <string name="prefs_timeout">Thời gian chờ, giây</string>
+    <string name="prefs_first_run">Thiết lập ban đầu</string>
+    <string name="prefs_about">GC Tune 1.0 · kênh Game Cube</string>
+    <string name="prefs_language">Ngôn ngữ</string>
+    <string name="prefs_language_sub">Chọn ngôn ngữ ứng dụng</string>
+    <string name="prefs_system_language_btn">Cài đặt ngôn ngữ hệ thống</string>
+    <string name="lang_default">Mặc định hệ thống</string>
+    <string name="lang_en">English</string>
+    <string name="lang_ru">Русский</string>
+    <string name="lang_zh">简体中文</string>
+    <string name="lang_vi">Tiếng Việt</string>
+    <string name="setup_guide_path">Ultra Game Mode → Danh sách game được hỗ trợ → Khác → GC Tune</string>
+    <string name="setup_open_app">Mở GC Tune</string>
+    <string name="setup_open_settings_failed">Không mở được cài đặt game</string>
+    <string name="keepalive_notif_text">Bảo vệ nền đang hoạt động</string>
+    <string name="channel_notif_running">Đang chạy lệnh, chờ phản hồi từ kênh…</string>
+    <string name="adb_examples" formatted="false"># lệnh qua kênh uid1000
+adb shell content call --uri content://com.poc.gctune.bridge --method exec --arg "id" --extra wait:i:8
+
+# kết quả: ack|STATUS|rc|base64
+adb shell settings get secure gc_tune_adb_out
+
+# hoặc script từ repo
+.\gctune-adb.ps1 "id"</string>
+    <string name="bridge_disabled">cầu đang tắt — hãy bật «Lệnh qua ADB» ở trang «Khác»</string>
+
+    <!-- Material 3 Shape Names Array (Vietnamese) -->
+    <string-array name="shape_names">
+        <item>Hình tròn (Circle)</item>
+        <item>Hình vuông (Square)</item>
+        <item>Hình vuông vát (Slanted Square)</item>
+        <item>Vòm (Arch)</item>
+        <item>Cánh quạt (Fan)</item>
+        <item>Mũi tên (Arrow)</item>
+        <item>Bán nguyệt (Semi-Circle)</item>
+        <item>Hình bầu dục (Oval)</item>
+        <item>Viên nang (Pill)</item>
+        <item>Tam giác (Triangle)</item>
+        <item>Hình thoi (Diamond)</item>
+        <item>Vỏ sò (Clam Shell)</item>
+        <item>Ngũ giác (Pentagon)</item>
+        <item>Viên ngọc (Gem)</item>
+        <item>Mặt trời (Sunny)</item>
+        <item>Mặt trời rực rỡ (Very Sunny)</item>
+        <item>Bánh quy 4 (Cookie 4)</item>
+        <item>Bánh quy 6 (Cookie 6)</item>
+        <item>Bánh quy 7 (Cookie 7)</item>
+        <item>Bánh quy 9 (Cookie 9)</item>
+        <item>Bánh quy 12 (Cookie 12)</item>
+        <item>Bóng ma (Ghostish)</item>
+        <item>Cỏ 4 lá (Clover 4)</item>
+        <item>Cỏ 8 lá (Clover 8)</item>
+        <item>Tia nổ (Burst)</item>
+        <item>Tia nổ mềm (Soft Burst)</item>
+        <item>Bùng nổ (Boom)</item>
+        <item>Bùng nổ mềm (Soft Boom)</item>
+        <item>Bông hoa (Flower)</item>
+        <item>Phồng (Puffy)</item>
+        <item>Hình thoi phồng (Puffy Diamond)</item>
+        <item>Điểm ảnh tròn (Pixel Circle)</item>
+        <item>Điểm ảnh tam giác (Pixel Triangle)</item>
+        <item>Bánh bao (Bun)</item>
+        <item>Trái tim (Heart)</item>
+    </string-array>
+</resources>

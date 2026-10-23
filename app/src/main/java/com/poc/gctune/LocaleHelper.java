@@ -42,6 +42,7 @@ public final class LocaleHelper {
     public static final String LANG_EN = "en";
     public static final String LANG_RU = "ru";
     public static final String LANG_ZH = "zh-Hans";
+    public static final String LANG_VI = "vi";
 
     private static final String PREF_NAME = "gctune_prefs";
     private static final String KEY_LOCALE = "app_language";
@@ -76,18 +77,21 @@ public final class LocaleHelper {
             return context.getString(R.string.lang_ru);
         } else if (LANG_ZH.equalsIgnoreCase(lang)) {
             return context.getString(R.string.lang_zh);
+        } else if (LANG_VI.equalsIgnoreCase(lang)) {
+            return context.getString(R.string.lang_vi);
         }
         return context.getString(R.string.lang_default);
     }
 
     /** Shows a language selection dialog. */
     public static void showLanguageDialog(final Activity activity, final Runnable onSelected) {
-        final String[] tags = {LANG_AUTO, LANG_EN, LANG_RU, LANG_ZH};
+        final String[] tags = {LANG_AUTO, LANG_EN, LANG_RU, LANG_ZH, LANG_VI};
         final String[] names = {
                 activity.getString(R.string.lang_default),
                 activity.getString(R.string.lang_en),
                 activity.getString(R.string.lang_ru),
-                activity.getString(R.string.lang_zh)
+                activity.getString(R.string.lang_zh),
+                activity.getString(R.string.lang_vi)
         };
 
         String currentTag = getLanguage(activity);
@@ -162,6 +166,7 @@ public final class LocaleHelper {
                     if ("zh".equalsIgnoreCase(lang)) return LANG_ZH;
                     if ("ru".equalsIgnoreCase(lang)) return LANG_RU;
                     if ("en".equalsIgnoreCase(lang)) return LANG_EN;
+                    if ("vi".equalsIgnoreCase(lang)) return LANG_VI;
                     return loc.toLanguageTag();
                 }
             }
