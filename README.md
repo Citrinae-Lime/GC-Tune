@@ -1,13 +1,13 @@
-# GC-Tune
+﻿# GC-Tune
 
-[![GitHub Release](https://img.shields.io/github/v/release/Bebrazui/GC-Tune?style=flat-square&color=2ea44f)](https://github.com/Bebrazui/GC-Tune/releases/latest)
+[![GitHub Release](https://img.shields.io/github/v/release/Citrinae-Lime/GC-Tune?style=flat-square&color=2ea44f)](https://github.com/Citrinae-Lime/GC-Tune/releases/latest)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Android%208.0%2B-brightgreen.svg?style=flat-square)](https://android.com)
+[![Platform](https://img.shields.io/badge/Platform-Android%2011%2B-brightgreen.svg?style=flat-square)](https://android.com)
 [![OriginOS](https://img.shields.io/badge/OriginOS-Supported-informational.svg?style=flat-square)](https://www.vivo.com/origin-os)
 
 An advanced system tuning utility and privilege channel implementation for OriginOS and vivo devices. GC-Tune leverages the Game Cube (Ultra Game Mode) execution environment to execute commands with elevated system privileges (`uid 1000` / `system`), install custom `.itz` themes, and apply custom icon pack coloring directly to the OriginOS launcher without root.
 
-[Download Latest Release](https://github.com/Bebrazui/GC-Tune/releases/latest) &bull; [Quick Setup](#quick-setup) &bull; [Features](#features) &bull; [Building](#building)
+[Download Latest Release](https://github.com/Citrinae-Lime/GC-Tune/releases/latest) &bull; [Quick Setup](#quick-setup) &bull; [Features](#features) &bull; [Building](#building)
 
 ---
 
@@ -39,7 +39,7 @@ GC-Tune is built around an IPC channel established through the privileged Game C
 
 ### 1. Installation
 
-Download the signed APK from the [Releases](https://github.com/Bebrazui/GC-Tune/releases/latest) page and install it on your device:
+Download the signed APK from the [Releases](https://github.com/Citrinae-Lime/GC-Tune/releases/latest) page and install it on your device:
 
 ```bash
 adb install -r gctune-signed.apk
@@ -90,23 +90,59 @@ The app initiates a lightweight foreground service (`ChannelService`) holding th
 
 ## Building from Source
 
-### Prerequisites
+### Option 1: Standard Gradle Build (Recommended)
 
-- JDK 11 or higher
-- Android SDK (Platform 35 / Build-Tools 34.0.0+)
-- PowerShell (Windows / Linux / macOS)
+This compiles the active `app/` application module, including complete multi-language resources, Material 3 components, and optimizations.
 
-### Build Steps
+#### Prerequisites
 
-Clone the repository and run the build script:
+- **JDK 17 or higher** (JDK 21 or 25 recommended)
+- **Android SDK** (Platform 36 / Build-Tools 35+)
 
-```bash
-git clone https://github.com/Bebrazui/GC-Tune.git
-cd GC-Tune
-.\build.ps1
+#### 1. Configure Signing Credentials
+
+Signing configuration is in [`app/signing.gradle`](app/signing.gradle) so you can specify your own keystore credentials without modifying core build scripts:
+
+```groovy
+// In app/signing.gradle
+android {
+    signingConfigs {
+        release {
+            storeFile file('/path/to/your/release.keystore')
+            storePassword 'your_keystore_password'
+            keyAlias 'your_key_alias'
+            keyPassword 'your_key_password'
+        }
+    }
+}
 ```
 
-The script compiles the Java sources using `javac`, bundles the classes into a DEX file via `d8`, packages the APK via `aapt`, and signs it using `apksigner`.
+*(For debug builds, Gradle automatically uses the default debug keystore).*
+
+#### 2. Compile via Gradle Wrapper
+
+```powershell
+# Build Release APK
+.\gradlew assembleRelease
+
+# Or build Debug APK
+.\gradlew assembleDebug
+```
+
+Compiled APKs will be located at `app/build/outputs/apk/`.
+
+---
+
+### Option 2: Legacy Standalone Script (`build.ps1`)
+
+The repository retains the original upstream standalone PowerShell build script (`build.ps1`), which compiles the root-level flat `.java` files directly using raw SDK tools (`javac`, `d8`, `aapt`, `zipalign`, `apksigner`) without Gradle.
+
+> [!NOTE]
+> `build.ps1` compiles the legacy flat files without the XML resource system or internationalization. Before running it, ensure you edit `build.ps1` to update the hardcoded local paths (`$src`, `$bt`, `$androidJar`, `$jdk`, and signing keystore) to match your local machine.
+
+```powershell
+.\build.ps1
+```
 
 ---
 
